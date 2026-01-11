@@ -585,6 +585,12 @@ const EXTENSION_STYLES = `
     cursor: pointer;
     box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
     margin-bottom: 16px;
+    transition: all 0.3s;
+  }
+
+  .btn-export:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(16, 185, 129, 0.5);
   }
 
   .btn-primary {
@@ -598,6 +604,24 @@ const EXTENSION_STYLES = `
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 8px 24px rgba(102, 126, 234, 0.35);
+  }
+
+  .btn-secondary {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
   }
 
   .glass-card {
@@ -1140,9 +1164,17 @@ const InteractiveExtension = () => {
 
           {view === 'history' && (
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-               {history.map((item) => (
+              <button className="btn-export">
+                📥 Descargar Reporte Excel
+              </button>
+              {history.map((item) => (
                   <HistoryItem key={item.id} item={item} />
-               ))}
+              ))}
+              {history.length > 0 && (
+                <button className="btn-secondary" style={{ marginTop: '12px' }}>
+                  🗑️ Limpiar Historial
+                </button>
+              )}
             </div>
           )}
 
@@ -1369,14 +1401,10 @@ const Navbar = () => {
 };
 
 const SectionDivider = () => (
-  <div className="relative w-full my-0 md:my-0 overflow-hidden">
-    {/* Versión Móvil - Sutil y minimalista */}
-    <div className="md:hidden py-8">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="relative h-px">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
-        </div>
-      </div>
+  <div className="relative w-full overflow-hidden">
+    {/* Versión Móvil - Completamente integrada sin padding visible */}
+    <div className="md:hidden relative h-px w-full">
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
     </div>
     
     {/* Versión Desktop - Original con glow */}
