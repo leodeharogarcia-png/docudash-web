@@ -1805,7 +1805,7 @@ const SecuritySection = () => {
               </li>
             </ul>
             <div className="pt-4">
-              <a href="https://docudash-backend.vercel.app/privacy.html" className="inline-flex items-center gap-2 text-sm text-brand-blue hover:text-blue-300 transition-colors font-medium hover:underline underline-offset-4">
+              <a href="/privacy.html" className="inline-flex items-center gap-2 text-sm text-brand-blue hover:text-blue-300 transition-colors font-medium hover:underline underline-offset-4">
                 Nuestra política de privacidad <ArrowRight size={16} />
               </a>
             </div>
