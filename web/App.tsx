@@ -1656,7 +1656,7 @@ const DriveIntegrationSection = () => {
           </p>
 
           {/* Interactive Configuration Selector */}
-          <div className="relative group">
+          <div className="relative group flex-1">
             {/* Glow Effect matching the Right Panel */}
             <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
 
