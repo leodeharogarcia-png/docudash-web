@@ -1639,7 +1639,7 @@ const DriveIntegrationSection = () => {
       <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 md:gap-16 items-center relative z-10">
 
         {/* Left Column: Explanation */}
-        <div className="space-y-8">
+        <div className="space-y-8 flex flex-col h-full">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-semibold">
             {/* Replaced with generic Cloud icon as requested */}
             <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-4 h-4 object-contain" />
@@ -1660,7 +1660,7 @@ const DriveIntegrationSection = () => {
             {/* Glow Effect matching the Right Panel */}
             <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
 
-            <div className="relative bg-[#151a25] border border-white/10 rounded-2xl overflow-hidden shadow-2xl h-[320px] md:h-[500px] flex flex-col">
+            <div className="relative bg-[#151a25] border border-white/10 rounded-2xl overflow-hidden shadow-2xl h-full flex flex-col">
 
               {/* Window Header - Matched Style */}
               <div className="bg-[#1e2330] border-b border-white/10 p-3 md:p-4 flex items-center justify-between shrink-0">
@@ -1710,11 +1710,11 @@ const DriveIntegrationSection = () => {
         </div>
 
         {/* Right Column: Visual Demo */}
-        <div className="relative group">
+        <div className="relative group h-full">
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
 
           {/* Mock Drive Interface */}
-          <div className="relative bg-[#151a25] border border-white/10 rounded-2xl overflow-hidden shadow-2xl h-[380px] md:h-[500px] flex flex-col">
+          <div className="relative bg-[#151a25] border border-white/10 rounded-2xl overflow-hidden shadow-2xl h-full min-h-[400px] md:min-h-[500px] flex flex-col">
 
             {/* Window Header */}
             <div className="bg-[#1e2330] border-b border-white/10 p-2 md:p-4 flex items-center justify-between shrink-0">
@@ -1991,7 +1991,7 @@ const Footer = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Email</span>
-                <a href="mailto:hola@docudash.pro" className="text-sm text-white hover:text-brand-blue transition-colors">hola@docudash.pro</a>
+                <a href="mailto:info@docudash.es" className="text-sm text-white hover:text-brand-blue transition-colors">info@docudash.es</a>
               </div>
             </div>
             <div className="flex items-center gap-3">
