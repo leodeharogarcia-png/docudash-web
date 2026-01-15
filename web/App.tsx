@@ -1760,7 +1760,7 @@ const DriveIntegrationSection = () => {
               </div>
 
               {/* Main Content Area */}
-              <div className="flex-1 bg-[#151a25] p-4 md:p-6 overflow-y-auto">
+              <div className="flex-1 bg-[#151a25] p-4 md:p-6 overflow-y-auto flex flex-col">
 
                 {/* Breadcrumbs - Dynamic with wrapping */}
                 <div className="flex flex-wrap items-center gap-1.5 md:gap-2 text-xs md:text-sm text-gray-400 mb-3 md:mb-6 pb-2 md:pb-4 border-b border-white/5">
@@ -1780,6 +1780,14 @@ const DriveIntegrationSection = () => {
                 {/* Folder Structure Visualization */}
                 <div className="space-y-2">
                   {renderFolderTree(currentLevels)}
+                </div>
+
+                {/* Fill Empty Space with Drop Zone Visual */}
+                <div className="flex-1 min-h-[100px] mt-6 border-2 border-dashed border-white/5 rounded-xl flex flex-col items-center justify-center text-gray-600 gap-2 transition-colors hover:border-white/10 hover:bg-white/5 group/dropzone opacity-60 hover:opacity-100">
+                  <div className="p-3 bg-[#1e2330] rounded-full group-hover/dropzone:scale-110 transition-transform shadow-lg">
+                    <Cloud size={20} className="text-gray-500" />
+                  </div>
+                  <span className="text-xs font-medium uppercase tracking-wider">Arrastra archivos aquí</span>
                 </div>
 
               </div>
