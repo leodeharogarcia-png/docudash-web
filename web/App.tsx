@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { 
-  Bot, 
-  FolderOpen, 
-  FileSpreadsheet, 
-  ShieldCheck, 
-  Zap, 
-  CheckCircle2, 
-  ArrowRight, 
-  Menu, 
+import {
+  Bot,
+  FolderOpen,
+  FileSpreadsheet,
+  ShieldCheck,
+  Zap,
+  CheckCircle2,
+  ArrowRight,
+  Menu,
   X,
   Mail,
   HardDrive,
@@ -922,30 +922,30 @@ const HistoryItem: React.FC<{ item: InvoiceData }> = ({ item }) => {
       </div>
       <div className={`details-panel ${expanded ? 'expanded' : ''}`}>
         <div className="details-grid">
-           <div className="detail-item">
-             <span className="detail-label">CIF TERCERO</span>
-             <span className="detail-value">{item.cif}</span>
-           </div>
-           <div className="detail-item">
-             <span className="detail-label">TIPO</span>
-             <span className="detail-value">{item.direccion}</span>
-           </div>
-           <div className="detail-item">
-             <span className="detail-label">DOC</span>
-             <span className="detail-value">{item.numeroDocumento}</span>
-           </div>
-           <div className="detail-item">
-             <span className="detail-label">FECHA</span>
-             <span className="detail-value">{item.fechaDocumento}</span>
-           </div>
-           <div className="detail-item" style={{ gridColumn: 'span 2' }}>
-             <span className="detail-label">RUTA DRIVE</span>
-             <span className="detail-value" style={{ fontSize: '10px', color: '#a5b4fc', wordBreak: 'break-all' }}>{item.ruta}</span>
-           </div>
-           <a href="#" className="drive-action-btn">
-             <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-4 h-4 object-contain" />
-             📂 Abrir en Google Drive
-           </a>
+          <div className="detail-item">
+            <span className="detail-label">CIF TERCERO</span>
+            <span className="detail-value">{item.cif}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">TIPO</span>
+            <span className="detail-value">{item.direccion}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">DOC</span>
+            <span className="detail-value">{item.numeroDocumento}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">FECHA</span>
+            <span className="detail-value">{item.fechaDocumento}</span>
+          </div>
+          <div className="detail-item" style={{ gridColumn: 'span 2' }}>
+            <span className="detail-label">RUTA DRIVE</span>
+            <span className="detail-value" style={{ fontSize: '10px', color: '#a5b4fc', wordBreak: 'break-all' }}>{item.ruta}</span>
+          </div>
+          <a href="#" className="drive-action-btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-4 h-4 object-contain" />
+            📂 Abrir en Google Drive
+          </a>
         </div>
       </div>
     </div>
@@ -956,24 +956,24 @@ const InteractiveExtension = () => {
   const [view, setView] = useState<'metrics' | 'history' | 'config'>('metrics');
   const [history, setHistory] = useState<InvoiceData[]>(INITIAL_DATA);
   const [folderStructure, setFolderStructure] = useState('{cliente}/{tipo}/{año}/{mes}');
-  
+
   // -- Metrics Calculation --
   const { totalInvoices, successRate, totalAmount, avgAmount, emitidas, recibidas, topClients, invoiceTypes } = useMemo(() => {
     const successItems = history.filter(i => i.status === 'success');
     const emitidasItems = successItems.filter(i => i.direccion === 'EMITIDA');
     const recibidasItems = successItems.filter(i => i.direccion !== 'EMITIDA');
-    
+
     const sum = (items: InvoiceData[]) => items.reduce((acc, curr) => acc + Math.abs(curr.numericAmount), 0);
     const totalEmitidas = sum(emitidasItems);
     const totalRecibidas = sum(recibidasItems);
     const total = totalEmitidas + totalRecibidas;
-    
+
     // Top Clients
     const clientTotals: Record<string, number> = {};
     successItems.forEach(i => {
       clientTotals[i.cliente] = (clientTotals[i.cliente] || 0) + Math.abs(i.numericAmount);
     });
-    const sortedClients = Object.entries(clientTotals).sort((a,b) => b[1] - a[1]).slice(0,5);
+    const sortedClients = Object.entries(clientTotals).sort((a, b) => b[1] - a[1]).slice(0, 5);
 
     return {
       totalInvoices: history.length,
@@ -987,7 +987,7 @@ const InteractiveExtension = () => {
     };
   }, [history]);
 
-  const formatMoney = (amount: number) => 
+  const formatMoney = (amount: number) =>
     new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(amount);
 
   const formatAmount = (amount: number) => {
@@ -1002,7 +1002,7 @@ const InteractiveExtension = () => {
     <div id="extension-root" className="w-[520px] h-[640px] rounded-2xl shadow-2xl mx-auto">
       <style>{EXTENSION_STYLES}</style>
       <div className="bg-particles"></div>
-      
+
       <div className="ext-container">
         {/* HEADER */}
         <div className="ext-header">
@@ -1045,25 +1045,25 @@ const InteractiveExtension = () => {
           </div>
 
           <div className="progress-bar-elegant">
-            <div className="progress-fill" style={{ width: `${Math.min((history.length/100)*100, 100)}%` }}></div>
+            <div className="progress-fill" style={{ width: `${Math.min((history.length / 100) * 100, 100)}%` }}></div>
           </div>
 
           <div className="tabs">
-            <button 
+            <button
               className={`tab-btn ${view === 'metrics' ? 'active' : ''}`}
               onClick={() => setView('metrics')}
             >
               <span className="tab-icon">📊</span>
               <span>Métricas</span>
             </button>
-            <button 
+            <button
               className={`tab-btn ${view === 'history' ? 'active' : ''}`}
               onClick={() => setView('history')}
             >
               <span className="tab-icon">📋</span>
               <span>Historial</span>
             </button>
-            <button 
+            <button
               className={`tab-btn ${view === 'config' ? 'active' : ''}`}
               onClick={() => setView('config')}
             >
@@ -1103,7 +1103,7 @@ const InteractiveExtension = () => {
                   <div className="panel-count">{emitidas.items.length} facturas</div>
                   <div className="mini-stat">
                     <span>Promedio:</span>
-                    <span>{formatAmount(emitidas.items.length ? emitidas.total/emitidas.items.length : 0)}</span>
+                    <span>{formatAmount(emitidas.items.length ? emitidas.total / emitidas.items.length : 0)}</span>
                   </div>
                 </div>
                 <div className="metric-panel received-panel">
@@ -1112,7 +1112,7 @@ const InteractiveExtension = () => {
                   <div className="panel-count">{recibidas.items.length} facturas</div>
                   <div className="mini-stat">
                     <span>Promedio:</span>
-                    <span>{formatAmount(recibidas.items.length ? recibidas.total/recibidas.items.length : 0)}</span>
+                    <span>{formatAmount(recibidas.items.length ? recibidas.total / recibidas.items.length : 0)}</span>
                   </div>
                 </div>
               </div>
@@ -1133,7 +1133,7 @@ const InteractiveExtension = () => {
                 <div className="chart-title">📈 Top 5 Clientes</div>
                 {topClients.map(([client, amount], idx) => (
                   <div className="bar-item" key={idx}>
-                    <div className="bar-label">{client.substring(0,12)}..</div>
+                    <div className="bar-label">{client.substring(0, 12)}..</div>
                     <div className="bar-track">
                       <div className="bar-fill" style={{ width: `${(amount / (topClients[0]?.[1] || 1)) * 100}%` }}></div>
                     </div>
@@ -1168,7 +1168,7 @@ const InteractiveExtension = () => {
                 📥 Descargar Reporte Excel
               </button>
               {history.map((item) => (
-                  <HistoryItem key={item.id} item={item} />
+                <HistoryItem key={item.id} item={item} />
               ))}
               {history.length > 0 && (
                 <button className="btn-secondary" style={{ marginTop: '12px' }}>
@@ -1183,8 +1183,8 @@ const InteractiveExtension = () => {
               <div className="glass-card">
                 <div className="form-group">
                   <label className="form-label">📁 Estructura de Carpetas en Drive</label>
-                  <select 
-                    className="form-select" 
+                  <select
+                    className="form-select"
                     value={folderStructure}
                     onChange={(e) => setFolderStructure(e.target.value)}
                   >
@@ -1250,30 +1250,29 @@ const SimpleWorkflow = () => {
   return (
     <div className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md shadow-xl">
       <div className="relative flex justify-between items-start">
-        
+
         {/* Track Line - Centered relative to w-16 container (center is 2rem/32px/left-8) */}
         <div className="absolute top-5 left-8 right-8 h-0.5 bg-white/10 -translate-y-1/2 z-0 rounded-full">
-           {/* Active Line Container */}
-           <div className="h-full w-full relative">
-              <div 
-                className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 transition-all duration-500 ease-out rounded-full"
-                style={{ width: `${(displayStep / (steps.length - 1)) * 100}%` }}
-              ></div>
-           </div>
+          {/* Active Line Container */}
+          <div className="h-full w-full relative">
+            <div
+              className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 transition-all duration-500 ease-out rounded-full"
+              style={{ width: `${(displayStep / (steps.length - 1)) * 100}%` }}
+            ></div>
+          </div>
         </div>
 
         {steps.map((s, idx) => {
           const Icon = s.icon;
           const isActive = idx <= displayStep;
-          
+
           return (
             <div key={idx} className="relative z-10 flex flex-col items-center gap-3 w-16">
-              <div 
-                className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${
-                  isActive 
-                    ? 'bg-[#151a25] border-blue-500 text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.5)] scale-110' 
+              <div
+                className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${isActive
+                    ? 'bg-[#151a25] border-blue-500 text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.5)] scale-110'
                     : 'bg-[#0f0c29] border-white/10 text-gray-600 scale-100'
-                }`}
+                  }`}
               >
                 {s.img ? (
                   <img src={s.img} alt={s.label} className={`w-5 h-5 object-contain ${isActive ? 'animate-pulse' : ''}`} />
@@ -1300,7 +1299,7 @@ const SimpleWorkflow = () => {
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -1311,92 +1310,96 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-2 md:top-6 left-1/2 -translate-x-1/2 w-[96%] md:w-[85%] max-w-5xl z-50 transition-all duration-300">
-    <div className="relative rounded-2xl md:rounded-full bg-[#1B2535]/90 backdrop-blur-xl border border-blue-500/20 shadow-2xl overflow-hidden ring-1 ring-white/10">
-        
+      <div className="relative rounded-2xl md:rounded-full bg-[#1B2535]/90 backdrop-blur-xl border border-blue-500/20 shadow-2xl overflow-hidden ring-1 ring-white/10">
+
         {/* Header Principal */}
         <div className="px-3 py-2 md:px-6 md:py-3 flex items-center justify-between">
-            
-            {/* 1. LOGO (Izquierda) */}
-            <a href="#" className="flex items-center space-x-2 rtl:space-x-reverse min-w-[140px]">
-                <img src="/logo.png" alt="Logo" className="w-10 h-10 md:w-14 md:h-14 object-contain" />
-                <span className="self-center text-sm md:text-lg font-bold whitespace-nowrap tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-indigo-200">
-                    DocuDash Pro
-                </span>
+
+          {/* 1. LOGO (Izquierda) */}
+          <a href="#" className="flex items-center space-x-2 rtl:space-x-reverse min-w-[140px]">
+            <img src="/logo.png" alt="Logo" className="w-10 h-10 md:w-14 md:h-14 object-contain" />
+            <span className="self-center text-sm md:text-lg font-bold whitespace-nowrap tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-indigo-200">
+              DocuDash Pro
+            </span>
+          </a>
+          {/* 2. MENÚ DESKTOP (Centro) */}
+          <div className="hidden md:flex flex-1 justify-center">
+            <ul className="flex font-medium space-x-8 text-sm px-6 py-2 rounded-full bg-white/5 border border-white/5">
+              <li>
+                <button onClick={() => scrollToSection('features')} className="text-gray-300 hover:text-white hover:text-blue-400 transition-colors">
+                  Características
+                </button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('drive-integration')} className="text-gray-300 hover:text-white hover:text-blue-400 transition-colors">
+                  Drive
+                </button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('how-it-works')} className="text-gray-300 hover:text-white hover:text-blue-400 transition-colors">
+                  Privacidad
+                </button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('installation')} className="text-gray-300 hover:text-white hover:text-blue-400 transition-colors">
+                  Instalación
+                </button>
+              </li>
+            </ul>
+          </div>
+          {/* 3. BOTÓN & MENÚ MÓVIL (Derecha) */}
+          <div className="flex items-center gap-2 md:gap-3 min-w-[140px] justify-end">
+            {/* Botón CTA - Desktop */}
+            <a
+              href="https://chromewebstore.google.com/detail/mlbhcjeajpgihflpoghpfannfbakfnlo?utm_source=item-share-cb"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:flex items-center gap-2 text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 font-semibold rounded-full text-xs md:text-sm px-5 py-2.5 transition-all shadow-lg shadow-blue-500/25 border border-white/10 hover:scale-105"
+            >
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" alt="Chrome" className="w-4 h-4" />
+              Instalar Gratis
             </a>
-            {/* 2. MENÚ DESKTOP (Centro) */}
-            <div className="hidden md:flex flex-1 justify-center">
-                <ul className="flex font-medium space-x-8 text-sm px-6 py-2 rounded-full bg-white/5 border border-white/5">
-                    <li>
-                        <button onClick={() => scrollToSection('features')} className="text-gray-300 hover:text-white hover:text-blue-400 transition-colors">
-                            Características
-                        </button>
-                    </li>
-                    <li>
-                        <button onClick={() => scrollToSection('drive-integration')} className="text-gray-300 hover:text-white hover:text-blue-400 transition-colors">
-                            Drive
-                        </button>
-                    </li>
-                    <li>
-                        <button onClick={() => scrollToSection('how-it-works')} className="text-gray-300 hover:text-white hover:text-blue-400 transition-colors">
-                            Privacidad
-                        </button>
-                    </li>
-                    <li>
-                        <button onClick={() => scrollToSection('installation')} className="text-gray-300 hover:text-white hover:text-blue-400 transition-colors">
-                            Instalación
-                        </button>
-                    </li>
-                </ul>
-            </div>
-            {/* 3. BOTÓN & MENÚ MÓVIL (Derecha) */}
-            <div className="flex items-center gap-2 md:gap-3 min-w-[140px] justify-end">
-                {/* Botón CTA - Desktop */}
-                <button
-                    onClick={() => scrollToSection('installation')}
-                    className="hidden md:flex items-center gap-2 text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 font-semibold rounded-full text-xs md:text-sm px-5 py-2.5 transition-all shadow-lg shadow-blue-500/25 border border-white/10 hover:scale-105"
-                >
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" alt="Chrome" className="w-4 h-4" />
-                    Instalar Gratis
-                </button>
-                {/* Botón Menú - Móvil */}
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="inline-flex items-center p-2 w-10 h-10 justify-center text-gray-400 rounded-lg md:hidden hover:bg-white/10 focus:outline-none transition-colors"
-                >
-                    {isOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
-            </div>
+            {/* Botón Menú - Móvil */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center p-2 w-10 h-10 justify-center text-gray-400 rounded-lg md:hidden hover:bg-white/10 focus:outline-none transition-colors"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
         {/* Menú Móvil Expandible */}
         <div className={`md:hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
-            <div className="px-3 pb-3 border-t border-white/5 bg-[#161e2c]">
-                <ul className="flex flex-col space-y-1 pt-3">
-                    <li>
-                        <button onClick={() => scrollToSection('features')} className="block w-full text-left py-3 px-4 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Características</button>
-                    </li>
-                    <li>
-                        <button onClick={() => scrollToSection('drive-integration')} className="block w-full text-left py-3 px-4 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Drive</button>
-                    </li>
-                    <li>
-                        <button onClick={() => scrollToSection('how-it-works')} className="block w-full text-left py-3 px-4 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Privacidad</button>
-                    </li>
-                    <li>
-                        <button onClick={() => scrollToSection('installation')} className="block w-full text-left py-3 px-4 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Instalación</button>
-                    </li>
-                    <li className="pt-2">
-                        <button
-                            onClick={() => scrollToSection('installation')}
-                            className="w-full flex items-center justify-center gap-2 text-white bg-gradient-to-r from-blue-600 to-indigo-600 font-bold rounded-lg text-sm px-5 py-3 transition-all shadow-lg shadow-blue-500/20"
-                        >
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" alt="Chrome" className="w-4 h-4" />
-                            Instalar Gratis
-                        </button>
-                    </li>
-                </ul>
-            </div>
+          <div className="px-3 pb-3 border-t border-white/5 bg-[#161e2c]">
+            <ul className="flex flex-col space-y-1 pt-3">
+              <li>
+                <button onClick={() => scrollToSection('features')} className="block w-full text-left py-3 px-4 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Características</button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('drive-integration')} className="block w-full text-left py-3 px-4 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Drive</button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('how-it-works')} className="block w-full text-left py-3 px-4 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Privacidad</button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('installation')} className="block w-full text-left py-3 px-4 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Instalación</button>
+              </li>
+              <li className="pt-2">
+                <a
+                  href="https://chromewebstore.google.com/detail/mlbhcjeajpgihflpoghpfannfbakfnlo?utm_source=item-share-cb"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 text-white bg-gradient-to-r from-blue-600 to-indigo-600 font-bold rounded-lg text-sm px-5 py-3 transition-all shadow-lg shadow-blue-500/20"
+                >
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" alt="Chrome" className="w-4 h-4" />
+                  Instalar Gratis
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-    </div>
-</nav>
+      </div>
+    </nav>
   );
 };
 
@@ -1406,7 +1409,7 @@ const SectionDivider = () => (
     <div className="md:hidden relative h-px w-full">
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
     </div>
-    
+
     {/* Versión Desktop - Original con glow */}
     <div className="hidden md:block relative h-px w-full">
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
@@ -1460,7 +1463,7 @@ const Features = () => {
           <h2 className="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4">Todo lo que necesitas para tu contabilidad</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">Deja que la tecnología haga el trabajo aburrido. Enfócate en hacer crecer tu negocio.</p>
         </div>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {features.map((f, idx) => (
             <div key={idx} className="bg-[#151A25]/50 border border-white/5 p-4 md:p-8 rounded-2xl hover:border-brand-blue/30 hover:bg-[#151A25] hover:shadow-2xl hover:shadow-brand-blue/5 hover:-translate-y-1 transition-all duration-300 group backdrop-blur-sm">
@@ -1488,30 +1491,30 @@ const DriveIntegrationSection = () => {
 
   // Enhanced options with visual structure meta-data
   const options = [
-    { 
-      id: 0, 
+    {
+      id: 0,
       structure: ['client', 'type', 'year', 'month'],
-      levels: ["TechCorp Solutions", "Emitidas", "2025", "Enero"] 
+      levels: ["TechCorp Solutions", "Emitidas", "2025", "Enero"]
     },
-    { 
-      id: 1, 
+    {
+      id: 1,
       structure: ['year', 'month', 'client', 'type'],
-      levels: ["2025", "Enero", "TechCorp Solutions", "Emitidas"] 
+      levels: ["2025", "Enero", "TechCorp Solutions", "Emitidas"]
     },
-    { 
-      id: 2, 
+    {
+      id: 2,
       structure: ['type', 'client', 'year', 'month'],
-      levels: ["Emitidas", "TechCorp Solutions", "2025", "Enero"] 
+      levels: ["Emitidas", "TechCorp Solutions", "2025", "Enero"]
     },
-    { 
-      id: 3, 
+    {
+      id: 3,
       structure: ['year', 'type', 'client'],
-      levels: ["2025", "Emitidas", "TechCorp Solutions"] 
+      levels: ["2025", "Emitidas", "TechCorp Solutions"]
     },
-    { 
-      id: 4, 
+    {
+      id: 4,
       structure: ['client', 'year', 'month'],
-      levels: ["TechCorp Solutions", "2025", "Enero"] 
+      levels: ["TechCorp Solutions", "2025", "Enero"]
     },
   ];
 
@@ -1521,29 +1524,29 @@ const DriveIntegrationSection = () => {
   const StructureChip = ({ type }: { type: string }) => {
     // Ultra-subtle colors: 5% opacity bg, 10% opacity border, 300-weight text
     const styles: Record<string, { bg: string, text: string, border: string, icon: React.ReactNode }> = {
-      client: { 
-        bg: 'bg-indigo-500/[0.05]', 
-        text: 'text-indigo-300', 
+      client: {
+        bg: 'bg-indigo-500/[0.05]',
+        text: 'text-indigo-300',
         border: 'border-indigo-500/10',
-        icon: <User size={12} /> 
+        icon: <User size={12} />
       },
-      year: { 
-        bg: 'bg-amber-500/[0.05]', 
-        text: 'text-amber-300', 
+      year: {
+        bg: 'bg-amber-500/[0.05]',
+        text: 'text-amber-300',
         border: 'border-amber-500/10',
-        icon: <Calendar size={12} /> 
+        icon: <Calendar size={12} />
       },
-      month: { 
-        bg: 'bg-emerald-500/[0.05]', 
-        text: 'text-emerald-300', 
+      month: {
+        bg: 'bg-emerald-500/[0.05]',
+        text: 'text-emerald-300',
         border: 'border-emerald-500/10',
-        icon: <CalendarDays size={12} /> 
+        icon: <CalendarDays size={12} />
       },
-      type: { 
-        bg: 'bg-violet-500/[0.05]', 
-        text: 'text-violet-300', 
+      type: {
+        bg: 'bg-violet-500/[0.05]',
+        text: 'text-violet-300',
         border: 'border-violet-500/10',
-        icon: <FileType size={12} /> 
+        icon: <FileType size={12} />
       },
     };
 
@@ -1564,36 +1567,36 @@ const DriveIntegrationSection = () => {
       // Base case: render file
       return (
         <div className={`ml-2 md:ml-4 mt-1 md:mt-2 border-l-2 border-blue-500/50 pl-2 md:pl-4 py-0.5 relative animate-in fade-in slide-in-from-left-2 duration-300`} style={{ animationDelay: `${depth * 100}ms` }}>
-           {/* Active Indicator for file level */}
-           <div className="absolute -left-[9px] top-3 w-4 h-4 rounded-full bg-[#151a25] border-2 border-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
-           
-           <div className="bg-white/5 rounded-lg p-2 md:p-3 border border-white/10 space-y-1 md:space-y-2 mt-1 md:mt-2">
-             <div className="flex items-center justify-between group/file p-1.5 md:p-2 rounded hover:bg-white/5 transition-colors cursor-pointer">
-               <div className="flex items-center gap-3">
-                 <div className="p-1.5 rounded bg-red-500/20 text-red-400">
-                   <FileText size={16} />
-                 </div>
-                 <div className="min-w-0">
-                   <div className="text-xs text-white font-medium truncate">2025-01-15_INV-001.pdf</div>
-                   <div className="text-[10px] text-gray-500">2.5 MB • Hace 2 min</div>
-                 </div>
-               </div>
-               <MoreVertical size={14} className="text-gray-600 group-hover/file:text-white" />
-             </div>
-             
-             <div className="flex items-center justify-between group/file p-1.5 md:p-2 rounded hover:bg-white/5 transition-colors cursor-pointer">
-               <div className="flex items-center gap-3">
-                 <div className="p-1.5 rounded bg-red-500/20 text-red-400">
-                   <FileText size={16} />
-                 </div>
-                 <div className="min-w-0">
-                   <div className="text-xs text-white font-medium truncate">2025-01-20_INV-002.pdf</div>
-                   <div className="text-[10px] text-gray-500">1.8 MB • Recién añadido</div>
-                 </div>
-               </div>
-               <CheckCircle2 size={14} className="text-green-500" />
-             </div>
-           </div>
+          {/* Active Indicator for file level */}
+          <div className="absolute -left-[9px] top-3 w-4 h-4 rounded-full bg-[#151a25] border-2 border-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+
+          <div className="bg-white/5 rounded-lg p-2 md:p-3 border border-white/10 space-y-1 md:space-y-2 mt-1 md:mt-2">
+            <div className="flex items-center justify-between group/file p-1.5 md:p-2 rounded hover:bg-white/5 transition-colors cursor-pointer">
+              <div className="flex items-center gap-3">
+                <div className="p-1.5 rounded bg-red-500/20 text-red-400">
+                  <FileText size={16} />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-xs text-white font-medium truncate">2025-01-15_INV-001.pdf</div>
+                  <div className="text-[10px] text-gray-500">2.5 MB • Hace 2 min</div>
+                </div>
+              </div>
+              <MoreVertical size={14} className="text-gray-600 group-hover/file:text-white" />
+            </div>
+
+            <div className="flex items-center justify-between group/file p-1.5 md:p-2 rounded hover:bg-white/5 transition-colors cursor-pointer">
+              <div className="flex items-center gap-3">
+                <div className="p-1.5 rounded bg-red-500/20 text-red-400">
+                  <FileText size={16} />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-xs text-white font-medium truncate">2025-01-20_INV-002.pdf</div>
+                  <div className="text-[10px] text-gray-500">1.8 MB • Recién añadido</div>
+                </div>
+              </div>
+              <CheckCircle2 size={14} className="text-green-500" />
+            </div>
+          </div>
         </div>
       );
     }
@@ -1632,9 +1635,9 @@ const DriveIntegrationSection = () => {
       {/* Grid Pattern Background */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-30"></div>
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-900/10 to-transparent pointer-events-none"></div>
-      
+
       <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 md:gap-16 items-center relative z-10">
-        
+
         {/* Left Column: Explanation */}
         <div className="space-y-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-semibold">
@@ -1642,12 +1645,12 @@ const DriveIntegrationSection = () => {
             <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-4 h-4 object-contain" />
             Sincronización en Tiempo Real
           </div>
-          
+
           <h2 className="text-2xl md:text-5xl font-bold text-white leading-tight">
             Tu Google Drive, <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">Perfectamente Organizado</span>
           </h2>
-          
+
           <p className="text-lg text-gray-400 leading-relaxed">
             Personaliza cómo quieres que DocuDash Pro organice tus archivos. Elige la estructura que mejor se adapte a tu flujo de trabajo contable.
           </p>
@@ -1655,17 +1658,17 @@ const DriveIntegrationSection = () => {
           {/* Interactive Configuration Selector */}
           <div className="relative bg-[#151a25] border border-white/10 rounded-2xl overflow-hidden shadow-2xl h-[320px] md:h-[500px] flex flex-col">
             <div className="p-4 bg-white/5 border-b border-white/5 text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-               <Settings size={14} className="text-brand-blue" /> 
-               Configuración de Estructura
+              <Settings size={14} className="text-brand-blue" />
+              Configuración de Estructura
             </div>
             <div className="p-2 space-y-2">
               {options.map((opt) => (
-                <button 
+                <button
                   key={opt.id}
                   onClick={() => setActiveOption(opt.id)}
                   className={`w-full text-left p-3 rounded-xl transition-all duration-300 flex items-center justify-between group/card border
-                    ${activeOption === opt.id 
-                      ? 'bg-blue-600/10 border-blue-500/50 shadow-[0_0_20px_rgba(37,99,235,0.2)]' 
+                    ${activeOption === opt.id
+                      ? 'bg-blue-600/10 border-blue-500/50 shadow-[0_0_20px_rgba(37,99,235,0.2)]'
                       : 'bg-transparent border-transparent hover:bg-white/5 hover:border-white/10'
                     }`}
                 >
@@ -1694,10 +1697,10 @@ const DriveIntegrationSection = () => {
         {/* Right Column: Visual Demo */}
         <div className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-          
+
           {/* Mock Drive Interface */}
           <div className="relative bg-[#151a25] border border-white/10 rounded-2xl overflow-hidden shadow-2xl h-[380px] md:h-[500px] flex flex-col">
-            
+
             {/* Window Header */}
             <div className="bg-[#1e2330] border-b border-white/10 p-2 md:p-4 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
@@ -1719,15 +1722,15 @@ const DriveIntegrationSection = () => {
 
             {/* Window Body */}
             <div className="flex flex-1 overflow-hidden">
-              
+
               {/* Sidebar - HIDDEN ON MOBILE */}
               <div className="w-48 border-r border-white/5 p-4 hidden md:block bg-[#1a1f2b]">
                 {/* Logo Replaced with generic HardDrive icon as requested */}
                 <div className="flex items-center gap-3 mb-8 px-2">
-                   <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-8 h-8 object-contain" />
-                   <span className="text-xl font-medium text-white tracking-tight">Drive</span>
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-8 h-8 object-contain" />
+                  <span className="text-xl font-medium text-white tracking-tight">Drive</span>
                 </div>
-                
+
                 <div className="space-y-1">
                   <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-500/10 text-blue-400 text-sm font-medium">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-4 h-4 object-contain" /> Mi Unidad
@@ -1743,7 +1746,7 @@ const DriveIntegrationSection = () => {
 
               {/* Main Content Area */}
               <div className="flex-1 bg-[#151a25] p-4 md:p-6 overflow-y-auto">
-                
+
                 {/* Breadcrumbs - Dynamic with wrapping */}
                 <div className="flex flex-wrap items-center gap-1.5 md:gap-2 text-xs md:text-sm text-gray-400 mb-3 md:mb-6 pb-2 md:pb-4 border-b border-white/5">
                   <span className="hover:text-white cursor-pointer">Mi Unidad</span>
@@ -1761,7 +1764,7 @@ const DriveIntegrationSection = () => {
 
                 {/* Folder Structure Visualization */}
                 <div className="space-y-2">
-                   {renderFolderTree(currentLevels)}
+                  {renderFolderTree(currentLevels)}
                 </div>
 
               </div>
@@ -1777,7 +1780,7 @@ const SecuritySection = () => {
   return (
     <section id="how-it-works" className="py-12 md:py-24 bg-[#0B0F19] relative">
       <div className="absolute inset-0 opacity-[0.02] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat"></div>
-      
+
       <div className="max-w-5xl mx-auto px-4 relative z-10">
         <div className="bg-gradient-to-r from-[#151a25] to-[#11141d] border border-white/10 rounded-3xl p-5 md:p-12 flex flex-col md:flex-row items-center gap-6 md:gap-10 shadow-2xl">
           <div className="flex-1 space-y-6">
@@ -1787,7 +1790,7 @@ const SecuritySection = () => {
             </div>
             <h2 className="text-2xl md:text-3xl font-bold text-white">Tus datos nunca salen de tu entorno seguro</h2>
             <p className="text-gray-400">
-              A diferencia de otras herramientas SaaS, DocuDash Pro funciona localmente en tu navegador. 
+              A diferencia de otras herramientas SaaS, DocuDash Pro funciona localmente en tu navegador.
               Los PDFs se procesan en memoria y se envían directamente a <strong>tu</strong> Google Drive mediante canales cifrados (TLS 1.3).
             </p>
             <ul className="space-y-3">
@@ -1798,7 +1801,7 @@ const SecuritySection = () => {
                 <CheckCircle2 className="text-brand-purple" size={18} /> Cifrado de grado bancario AES-256.
               </li>
               <li className="flex items-start gap-3 text-gray-300">
-                <CheckCircle2 className="text-brand-purple shrink-0 mt-1" size={18} /> 
+                <CheckCircle2 className="text-brand-purple shrink-0 mt-1" size={18} />
                 <span>
                   <strong className="text-white">Anonimización de Datos Sensibles:</strong> Antes del procesamiento, aplicamos filtros para anonimizar datos sensibles como IBAN, números de teléfono y direcciones personales, asegurando que la IA solo analice la información estructural y fiscal necesaria.
                 </span>
@@ -1849,73 +1852,73 @@ const InstallationGuide = () => {
 
   return (
     <section id="installation" className="py-12 md:py-24 bg-[#0f0c29] relative overflow-hidden">
-       {/* Ambient Background */}
-       <div className="absolute top-0 right-0 w-1/3 h-full bg-blue-900/10 blur-[120px] pointer-events-none"></div>
-       <div className="absolute bottom-0 left-0 w-1/3 h-full bg-purple-900/10 blur-[120px] pointer-events-none"></div>
+      {/* Ambient Background */}
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-blue-900/10 blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-1/3 h-full bg-purple-900/10 blur-[120px] pointer-events-none"></div>
 
-       <div className="max-w-7xl mx-auto px-4 relative z-10">
-         <div className="text-center mb-16 md:mb-20">
-           <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-brand-purple text-xs font-semibold tracking-wider uppercase mb-4">
-             Onboarding Express
-           </span>
-           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Instalación en 4 Pasos</h2>
-           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-             Sin configuraciones complejas de servidor. Estarás operativo en menos de 60 segundos.
-           </p>
-         </div>
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <div className="text-center mb-16 md:mb-20">
+          <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-brand-purple text-xs font-semibold tracking-wider uppercase mb-4">
+            Onboarding Express
+          </span>
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Instalación en 4 Pasos</h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Sin configuraciones complejas de servidor. Estarás operativo en menos de 60 segundos.
+          </p>
+        </div>
 
-         <div className="relative">
-           {/* Connector Line (Desktop) - Improved with Dashed style behind cards */}
-           <div className="hidden md:block absolute top-[48px] left-[10%] right-[10%] h-0.5 border-t-2 border-dashed border-white/10 z-0"></div>
+        <div className="relative">
+          {/* Connector Line (Desktop) - Improved with Dashed style behind cards */}
+          <div className="hidden md:block absolute top-[48px] left-[10%] right-[10%] h-0.5 border-t-2 border-dashed border-white/10 z-0"></div>
 
-           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-             {steps.map((step, idx) => (
-               <div key={idx} className="relative group">
-                 {/* Card Container */}
-                 <div className="h-full bg-[#151a25]/50 backdrop-blur-xl border border-white/10 rounded-2xl p-4 md:p-6 relative overflow-hidden transition-all duration-300 hover:border-brand-blue/30 hover:shadow-2xl hover:shadow-brand-blue/10 hover:-translate-y-2">
-                    
-                    {/* Top Glow Border Effect */}
-                    <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${step.gradient} opacity-50 group-hover:opacity-100 transition-opacity`}></div>
-                    
-                    {/* Large Background Number */}
-                    <div className="absolute -right-4 -top-6 text-6xl md:text-8xl font-black text-white/[0.03] select-none pointer-events-none group-hover:text-white/[0.06] transition-colors">
-                      0{idx + 1}
-                    </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+            {steps.map((step, idx) => (
+              <div key={idx} className="relative group">
+                {/* Card Container */}
+                <div className="h-full bg-[#151a25]/50 backdrop-blur-xl border border-white/10 rounded-2xl p-4 md:p-6 relative overflow-hidden transition-all duration-300 hover:border-brand-blue/30 hover:shadow-2xl hover:shadow-brand-blue/10 hover:-translate-y-2">
 
-                    {/* Icon */}
-                    <div className="relative z-10 mb-4 md:mb-6 flex justify-center md:justify-start">
-                      <div className={`w-16 h-16 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br ${step.gradient} p-0.5 shadow-lg`}>
-                        <div className="w-full h-full bg-[#151a25] rounded-[14px] flex items-center justify-center relative overflow-hidden group-hover:bg-opacity-90 transition-all">
-                           <div className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-20`}></div>
-                           {step.img ? (
-                             <img src={step.img} alt={step.title} className="w-8 h-8 md:w-10 md:h-10 object-contain relative z-10" />
-                           ) : (
-                             <div className="relative z-10 transform scale-75 md:scale-100">
-                               {step.icon}
-                             </div>
-                           )}
-                        </div>
+                  {/* Top Glow Border Effect */}
+                  <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${step.gradient} opacity-50 group-hover:opacity-100 transition-opacity`}></div>
+
+                  {/* Large Background Number */}
+                  <div className="absolute -right-4 -top-6 text-6xl md:text-8xl font-black text-white/[0.03] select-none pointer-events-none group-hover:text-white/[0.06] transition-colors">
+                    0{idx + 1}
+                  </div>
+
+                  {/* Icon */}
+                  <div className="relative z-10 mb-4 md:mb-6 flex justify-center md:justify-start">
+                    <div className={`w-16 h-16 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br ${step.gradient} p-0.5 shadow-lg`}>
+                      <div className="w-full h-full bg-[#151a25] rounded-[14px] flex items-center justify-center relative overflow-hidden group-hover:bg-opacity-90 transition-all">
+                        <div className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-20`}></div>
+                        {step.img ? (
+                          <img src={step.img} alt={step.title} className="w-8 h-8 md:w-10 md:h-10 object-contain relative z-10" />
+                        ) : (
+                          <div className="relative z-10 transform scale-75 md:scale-100">
+                            {step.icon}
+                          </div>
+                        )}
                       </div>
                     </div>
+                  </div>
 
-                    {/* Content */}
-                    <div className="relative z-10 text-center md:text-left">
-                      <h3 className="text-sm md:text-xl font-bold text-white mb-2 md:mb-3 group-hover:text-brand-blue transition-colors">{step.title}</h3>
-                      <p className="text-xs md:text-sm text-gray-400 leading-relaxed font-medium">{step.desc}</p>
-                    </div>
-                 </div>
-               </div>
-             ))}
-           </div>
-         </div>
-         
-         <div className="mt-16 text-center">
-            <button className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors border-b border-transparent hover:border-white pb-0.5">
-              <Chrome size={16} />
-              Ver documentación completa de instalación
-            </button>
-         </div>
-       </div>
+                  {/* Content */}
+                  <div className="relative z-10 text-center md:text-left">
+                    <h3 className="text-sm md:text-xl font-bold text-white mb-2 md:mb-3 group-hover:text-brand-blue transition-colors">{step.title}</h3>
+                    <p className="text-xs md:text-sm text-gray-400 leading-relaxed font-medium">{step.desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-16 text-center">
+          <button className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors border-b border-transparent hover:border-white pb-0.5">
+            <Chrome size={16} />
+            Ver documentación completa de instalación
+          </button>
+        </div>
+      </div>
     </section>
   );
 };
@@ -1951,9 +1954,9 @@ const FAQ = () => {
 const Footer = () => {
   return (
     <footer className="bg-[#0f0c29] border-t border-white/5 py-12 relative overflow-hidden">
-       {/* Background line */}
+      {/* Background line */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-px bg-gradient-to-r from-transparent via-brand-blue/30 to-transparent"></div>
-      
+
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-8">
           <div className="space-y-4 max-w-sm">
@@ -1969,7 +1972,7 @@ const Footer = () => {
           <div className="flex flex-col sm:flex-row gap-8">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-brand-blue border border-white/10">
-                 <Mail size={16} />
+                <Mail size={16} />
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Email</span>
@@ -1978,7 +1981,7 @@ const Footer = () => {
             </div>
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-brand-blue border border-white/10">
-                 <Phone size={16} />
+                <Phone size={16} />
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Teléfono</span>
@@ -1987,7 +1990,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-600 text-xs">© 2024 DocuDash Pro. Todos los derechos reservados.</p>
           <div className="flex gap-6 text-xs text-gray-500">
@@ -2008,12 +2011,12 @@ const Hero = () => {
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Subtle Grid Pattern - Increased Opacity */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-40"></div>
-        
+
         {/* Animated Gradient Orbs - Increased visibility & fixed animation class usage */}
         <div className="absolute top-[-10%] left-[-10%] w-[40rem] h-[40rem] bg-brand-blue/10 rounded-full blur-[80px] animate-blob mix-blend-screen"></div>
         <div className="absolute top-[20%] right-[-10%] w-[35rem] h-[35rem] bg-brand-purple/10 rounded-full blur-[80px] animate-blob mix-blend-screen" style={{ animationDelay: '2s', animationDirection: 'reverse' }}></div>
         <div className="absolute bottom-[-10%] left-[20%] w-[40rem] h-[40rem] bg-brand-accent/5 rounded-full blur-[80px] animate-blob mix-blend-screen" style={{ animationDelay: '4s' }}></div>
-        
+
         {/* Floating Particles/Dust */}
         <div className="absolute inset-0 opacity-30 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat brightness-50 contrast-150 mix-blend-overlay"></div>
       </div>
@@ -2034,50 +2037,53 @@ const Hero = () => {
           <p className="text-sm md:text-lg text-gray-400 mb-6 md:mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed...">
             Olvídate de descargar PDFs manualmente. DocuDash Pro mueve tus documentos de
             <span className="inline-flex items-center gap-1 mx-1 font-bold text-red-400 bg-red-400/10 px-1.5 py-0.5 text-xs md:text-base rounded border border-red-400/20">
-               <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail" className="w-4 h-4 object-contain" /> Gmail
+              <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail" className="w-4 h-4 object-contain" /> Gmail
             </span>
             <span className="inline-flex items-center justify-center bg-white/5 rounded-full p-1 border border-white/10">
-               <ArrowRight size={14} className="text-gray-400" />
+              <ArrowRight size={14} className="text-gray-400" />
             </span>
             <span className="inline-flex items-center gap-1 mx-1 font-bold text-red-400 bg-red-400/10 px-1.5 py-0.5 text-xs md:text-base rounded border border-red-400/20">
-               <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-4 h-4 object-contain" /> Drive
+              <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-4 h-4 object-contain" /> Drive
             </span>
             automáticamente, extrayendo los datos clave con IA.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-in fade-in slide-in-from-bottom-7 duration-1000 delay-200">
-  {/* Botón Principal (Instalar) */}
-  <button 
-    className="group relative flex items-center justify-center gap-3 text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 px-8 md:px-10 py-3 md:py-4 rounded-full transition-all duration-300 shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 border border-white/10 hover:-translate-y-1 font-semibold text-base md:text-lg overflow-hidden"
-  >
-    {/* Efecto de brillo superior */}
-    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-    
-    {/* Destello hover */}
-    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-tr from-white/10 via-transparent to-transparent transition-opacity duration-500" />
-    {/* Icono Chrome */}
-    <img 
-      src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" 
-      alt="Chrome" 
-      className="w-5 h-5 md:w-6 md:h-6 drop-shadow-md group-hover:scale-110 transition-transform duration-300 relative z-10" 
-    />
-    
-    <span className="relative z-10 tracking-wide">
-      Instalar Gratis
-    </span>
-    <ChevronRight size={20} className="relative z-10 text-white/70 group-hover:text-white group-hover:translate-x-1 transition-all" />
-  </button>
-  {/* Botón Secundario (Demo) */}
-  <button className="group flex items-center justify-center gap-2 px-8 py-4 rounded-full font-medium text-gray-300 bg-[#1B2535]/50 border border-white/10 hover:bg-[#1B2535] hover:text-white hover:border-blue-500/30 transition-all duration-300 backdrop-blur-sm">
-    <span className="group-hover:text-blue-200 transition-colors">Ver Demo</span>
-    <ArrowRight size={18} className="text-gray-500 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
-  </button>
-</div>
+            {/* Botón Principal (Instalar) */}
+            <a
+              href="https://chromewebstore.google.com/detail/mlbhcjeajpgihflpoghpfannfbakfnlo?utm_source=item-share-cb"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative flex items-center justify-center gap-3 text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 px-8 md:px-10 py-3 md:py-4 rounded-full transition-all duration-300 shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 border border-white/10 hover:-translate-y-1 font-semibold text-base md:text-lg overflow-hidden"
+            >
+              {/* Efecto de brillo superior */}
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+
+              {/* Destello hover */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-tr from-white/10 via-transparent to-transparent transition-opacity duration-500" />
+              {/* Icono Chrome */}
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg"
+                alt="Chrome"
+                className="w-5 h-5 md:w-6 md:h-6 drop-shadow-md group-hover:scale-110 transition-transform duration-300 relative z-10"
+              />
+
+              <span className="relative z-10 tracking-wide">
+                Instalar Gratis
+              </span>
+              <ChevronRight size={20} className="relative z-10 text-white/70 group-hover:text-white group-hover:translate-x-1 transition-all" />
+            </a>
+            {/* Botón Secundario (Demo) */}
+            <button className="group flex items-center justify-center gap-2 px-8 py-4 rounded-full font-medium text-gray-300 bg-[#1B2535]/50 border border-white/10 hover:bg-[#1B2535] hover:text-white hover:border-blue-500/30 transition-all duration-300 backdrop-blur-sm">
+              <span className="group-hover:text-blue-200 transition-colors">Ver Demo</span>
+              <ArrowRight size={18} className="text-gray-500 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
+            </button>
+          </div>
           <p className="mt-4 text-sm text-gray-500 flex items-center justify-center lg:justify-start gap-2 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
             <ShieldCheck size={14} className="text-green-500" /> Datos cifrados y privados
           </p>
 
           <div className="mt-8 max-w-md mx-auto lg:mx-0 opacity-90 hover:opacity-100 transition-opacity animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
-              <SimpleWorkflow />
+            <SimpleWorkflow />
           </div>
         </div>
 
@@ -2095,13 +2101,13 @@ const Hero = () => {
 
 const FloatingCTA = () => {
   const [isVisible, setIsVisible] = useState(true);
-  
+
   useEffect(() => {
     const handleScroll = () => {
       // Ocultar si el usuario está en el hero o muy arriba
       setIsVisible(window.scrollY > 300);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -2114,17 +2120,18 @@ const FloatingCTA = () => {
   };
 
   return (
-    <button
-      onClick={scrollToInstallation}
-      className={`sm:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ${
-        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'
-      }`}
+    <a
+      href="https://chromewebstore.google.com/detail/mlbhcjeajpgihflpoghpfannfbakfnlo?utm_source=item-share-cb"
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`sm:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'
+        }`}
     >
       <div className="flex items-center gap-2 bg-gradient-to-br from-[#0066CC] via-[#0077ED] to-[#0088FF] text-white px-6 py-3 rounded-full shadow-2xl shadow-blue-500/60 border border-white/20">
         <Chrome size={18} />
         <span className="font-bold text-sm">Instalar Extensión</span>
       </div>
-    </button>
+    </a>
   );
 };
 

@@ -1,13 +1,9 @@
-/**
- * API DE CLASIFICACIÓN CON CORS HABILITADO - VERSIÓN CORREGIDA
- * Endpoint: /api/classify
- * Método: POST
- */
+import { sendTelegramMessage } from './lib/telegram';
 
 export default async function handler(req, res) {
   // ✅ CONFIGURAR CORS CORRECTAMENTE
   const origin = req.headers.origin || req.headers.referer || '*';
-  
+
   res.setHeader('Access-Control-Allow-Origin', origin);
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -21,8 +17,8 @@ export default async function handler(req, res) {
 
   // ✅ VALIDAR MÉTODO
   if (req.method !== 'POST') {
-    return res.status(405).json({ 
-      error: 'Método no permitido. Usa POST.' 
+    return res.status(405).json({
+      error: 'Método no permitido. Usa POST.'
     });
   }
 
@@ -32,8 +28,8 @@ export default async function handler(req, res) {
 
     // ✅ VALIDACIÓN
     if (!text || typeof text !== 'string') {
-      return res.status(400).json({ 
-        error: 'El parámetro "text" es requerido y debe ser string' 
+      return res.status(400).json({
+        error: 'El parámetro "text" es requerido y debe ser string'
       });
     }
 
@@ -141,8 +137,8 @@ Devuelve SOLO este JSON sin texto adicional:
 
     if (!OPENAI_API_KEY) {
       console.error('❌ OPENAI_API_KEY no configurada');
-      return res.status(500).json({ 
-        error: 'Configuración del servidor incompleta. Contacta al administrador.' 
+      return res.status(500).json({
+        error: 'Configuración del servidor incompleta. Contacta al administrador.'
       });
     }
 
@@ -175,8 +171,8 @@ Devuelve SOLO este JSON sin texto adicional:
     if (!openaiResponse.ok) {
       const errorData = await openaiResponse.json().catch(() => ({}));
       console.error('❌ OpenAI Error:', errorData);
-      return res.status(500).json({ 
-        error: `Error de IA: ${errorData.error?.message || 'Error desconocido'}` 
+      return res.status(500).json({
+        error: `Error de IA: ${errorData.error?.message || 'Error desconocido'}`
       });
     }
 
@@ -185,8 +181,8 @@ Devuelve SOLO este JSON sin texto adicional:
 
     if (!assistantMessage) {
       console.error('❌ Respuesta vacía de OpenAI');
-      return res.status(500).json({ 
-        error: 'La IA no devolvió ninguna respuesta' 
+      return res.status(500).json({
+        error: 'La IA no devolvió ninguna respuesta'
       });
     }
 
@@ -199,12 +195,12 @@ Devuelve SOLO este JSON sin texto adicional:
         .replace(/```json/g, '')
         .replace(/```/g, '')
         .trim();
-      
+
       classification = JSON.parse(cleanedText);
       console.log('✅ JSON parseado correctamente');
     } catch (parseError) {
       console.error('❌ Error parsing JSON:', assistantMessage);
-      return res.status(500).json({ 
+      return res.status(500).json({
         error: 'Error al interpretar respuesta de IA',
         rawResponse: assistantMessage.substring(0, 500)
       });
@@ -218,12 +214,16 @@ Devuelve SOLO este JSON sin texto adicional:
 
     console.log('📤 Enviando clasificación al cliente');
 
+    // 🔔 NOTIFICACIÓN TELEGRAM (ASÍNCRONA)
+    const telegramText = `✅ *¡Nueva Factura Procesada!*\n📄 *Proveedor:* ${classification.tercero_externo || 'Desconocido'}\n💰 *Importe:* ${classification.importe || '0'}€\n📅 *Tipo:* ${classification.direccion}`;
+    sendTelegramMessage(telegramText);
+
     // ✅ RETORNAR CON HEADERS CORS
     return res.status(200).json(classification);
 
   } catch (error) {
     console.error('❌ Error general:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       error: error.message || 'Error interno del servidor',
       stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
