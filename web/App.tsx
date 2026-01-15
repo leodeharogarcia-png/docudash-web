@@ -1270,8 +1270,8 @@ const SimpleWorkflow = () => {
             <div key={idx} className="relative z-10 flex flex-col items-center gap-3 w-16">
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${isActive
-                    ? 'bg-[#151a25] border-blue-500 text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.5)] scale-110'
-                    : 'bg-[#0f0c29] border-white/10 text-gray-600 scale-100'
+                  ? 'bg-[#151a25] border-blue-500 text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.5)] scale-110'
+                  : 'bg-[#0f0c29] border-white/10 text-gray-600 scale-100'
                   }`}
               >
                 {s.img ? (
@@ -1656,38 +1656,53 @@ const DriveIntegrationSection = () => {
           </p>
 
           {/* Interactive Configuration Selector */}
-          <div className="relative bg-[#151a25] border border-white/10 rounded-2xl overflow-hidden shadow-2xl h-[320px] md:h-[500px] flex flex-col">
-            <div className="p-4 bg-white/5 border-b border-white/5 text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-              <Settings size={14} className="text-brand-blue" />
-              Configuración de Estructura
-            </div>
-            <div className="p-2 space-y-2">
-              {options.map((opt) => (
-                <button
-                  key={opt.id}
-                  onClick={() => setActiveOption(opt.id)}
-                  className={`w-full text-left p-3 rounded-xl transition-all duration-300 flex items-center justify-between group/card border
-                    ${activeOption === opt.id
-                      ? 'bg-blue-600/10 border-blue-500/50 shadow-[0_0_20px_rgba(37,99,235,0.2)]'
-                      : 'bg-transparent border-transparent hover:bg-white/5 hover:border-white/10'
-                    }`}
-                >
-                  <div className="flex flex-wrap items-center gap-2">
-                    {opt.structure.map((part, index) => (
-                      <React.Fragment key={index}>
-                        <StructureChip type={part} />
-                        {index < opt.structure.length - 1 && (
-                          <ChevronRight size={12} className={`text-gray-600 ${activeOption === opt.id ? 'text-blue-500' : ''}`} />
-                        )}
-                      </React.Fragment>
-                    ))}
-                  </div>
-                  {activeOption === opt.id && <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>}
-                </button>
-              ))}
+          <div className="relative group">
+            {/* Glow Effect matching the Right Panel */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+
+            <div className="relative bg-[#151a25] border border-white/10 rounded-2xl overflow-hidden shadow-2xl h-[320px] md:h-[500px] flex flex-col">
+
+              {/* Window Header - Matched Style */}
+              <div className="bg-[#1e2330] border-b border-white/10 p-3 md:p-4 flex items-center justify-between shrink-0">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-slate-600/50"></div>
+                  <div className="w-3 h-3 rounded-full bg-slate-600/50"></div>
+                  <div className="w-3 h-3 rounded-full bg-slate-600/50"></div>
+                </div>
+                <div className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                  <Settings size={14} className="text-emerald-400" />
+                  <span>Configuración</span>
+                </div>
+                <div className="w-10"></div> {/* Spacer for visual balance */}
+              </div>
+
+              <div className="p-2 space-y-2 overflow-y-auto custom-scrollbar">
+                {options.map((opt) => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setActiveOption(opt.id)}
+                    className={`w-full text-left p-3 rounded-xl transition-all duration-300 flex items-center justify-between group/card border
+                      ${activeOption === opt.id
+                        ? 'bg-emerald-500/10 border-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.1)]'
+                        : 'bg-transparent border-transparent hover:bg-white/5 hover:border-white/10'
+                      }`}
+                  >
+                    <div className="flex flex-wrap items-center gap-2">
+                      {opt.structure.map((part, index) => (
+                        <React.Fragment key={index}>
+                          <StructureChip type={part} />
+                          {index < opt.structure.length - 1 && (
+                            <ChevronRight size={12} className={`text-gray-600 ${activeOption === opt.id ? 'text-emerald-500' : ''}`} />
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                    {activeOption === opt.id && <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-
           <div className="flex items-center gap-3 text-sm text-gray-500 italic">
             <Layout size={16} />
             <span>La vista previa a la derecha se actualiza automáticamente.</span>
