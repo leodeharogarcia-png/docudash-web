@@ -1640,7 +1640,7 @@ const DriveIntegrationSection = () => {
 
         {/* Left Column: Explanation */}
         <div className="space-y-8 flex flex-col h-full">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-semibold">
+          <div className="w-fit inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-semibold">
             {/* Replaced with generic Cloud icon as requested */}
             <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-4 h-4 object-contain" />
             Sincronización en Tiempo Real
