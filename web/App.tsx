@@ -34,7 +34,8 @@ import {
   Loader2,
   FileCheck,
   Chrome,
-  Phone
+  Phone,
+  Linkedin
 } from 'lucide-react';
 
 // ==========================================
@@ -2004,11 +2005,20 @@ const Footer = () => {
             </div>
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-brand-blue border border-white/10">
-                <Phone size={16} />
+                <Linkedin size={16} />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Teléfono</span>
-                <a href="tel:+34900123456" className="text-sm text-white hover:text-brand-blue transition-colors">+34 900 123 456</a>
+                <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">LinkedIn</span>
+                <a href="https://www.linkedin.com/in/leonardo-de-haro-garcia-1814383a6" target="_blank" rel="noopener noreferrer" className="text-sm text-white hover:text-brand-blue transition-colors italic">Conectar en LinkedIn</a>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-brand-blue border border-white/10">
+                <Chrome size={16} />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Tienda</span>
+                <a href="https://chromewebstore.google.com/detail/mlbhcjeajpgihflpoghpfannfbakfnlo?utm_source=item-share-cb" target="_blank" rel="noopener noreferrer" className="text-sm text-white hover:text-brand-blue transition-colors">Ver en Chrome Store</a>
               </div>
             </div>
           </div>
@@ -2017,8 +2027,8 @@ const Footer = () => {
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-600 text-xs">© 2024 DocuDash Pro. Todos los derechos reservados.</p>
           <div className="flex gap-6 text-xs text-gray-500">
-            <a href="#" className="hover:text-white transition-colors">Aviso Legal</a>
-            <a href="#" className="hover:text-white transition-colors">Privacidad</a>
+            <a href="/terms.html" className="hover:text-white transition-colors">Aviso Legal</a>
+            <a href="/privacy.html" className="hover:text-white transition-colors">Privacidad</a>
             <a href="#" className="hover:text-white transition-colors">Cookies</a>
           </div>
         </div>
