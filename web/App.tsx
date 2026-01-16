@@ -2193,10 +2193,10 @@ const Testimonials = () => {
       color: "bg-purple-500"
     },
     {
-      name: "David Torres",
-      role: "Consultor IT",
-      text: "La integración con Gmail es magia. Detecta solo las facturas y pasa de los emails de spam. Una herramienta imprescindible si eres autónomo.",
-      initials: "DT",
+      name: "Luis H.",
+      role: "Usuario Real",
+      text: "Me la instalé para probarla sin muchas expectativas la verdad, es simple y fácil de usar y me ahorra tiempo, y sobre todo, ya tengo todas las facturas día a día organizadas en Drive.",
+      initials: "LH",
       color: "bg-green-500"
     },
     {
