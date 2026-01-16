@@ -2051,7 +2051,7 @@ const Hero = () => {
       {/* Dynamic Background Animation */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Subtle Grid Pattern - Increased Opacity */}
-        <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:20px_20px] opacity-30 animate-pulse"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:30px_30px] opacity-20 animate-pulse"></div>
 
         {/* Animated Gradient Orbs - Increased visibility & fixed animation class usage */}
         <div className="absolute top-[-10%] left-[-10%] w-[40rem] h-[40rem] bg-brand-blue/10 rounded-full blur-[80px] animate-blob mix-blend-screen"></div>
