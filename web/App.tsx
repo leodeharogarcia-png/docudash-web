@@ -1346,6 +1346,11 @@ const Navbar = () => {
                   Instalación
                 </button>
               </li>
+              <li>
+                <button onClick={() => scrollToSection('contact')} className="text-gray-300 hover:text-white hover:text-blue-400 transition-colors">
+                  Contacto
+                </button>
+              </li>
             </ul>
           </div>
           {/* 3. BOTÓN & MENÚ MÓVIL (Derecha) */}
@@ -1384,6 +1389,9 @@ const Navbar = () => {
               </li>
               <li>
                 <button onClick={() => scrollToSection('installation')} className="block w-full text-left py-3 px-4 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Instalación</button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('contact')} className="block w-full text-left py-3 px-4 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Contacto</button>
               </li>
               <li className="pt-2">
                 <a
@@ -1977,7 +1985,7 @@ const FAQ = () => {
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0f0c29] border-t border-white/5 py-12 relative overflow-hidden">
+    <footer id="contact" className="bg-[#0f0c29] border-t border-white/5 py-12 relative overflow-hidden">
       {/* Background line */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-px bg-gradient-to-r from-transparent via-brand-blue/30 to-transparent"></div>
 
