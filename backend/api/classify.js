@@ -1,14 +1,21 @@
 import { sendTelegramMessage } from './lib/telegram';
 
 export default async function handler(req, res) {
-  // ✅ CONFIGURAR CORS CORRECTAMENTE
-  const origin = req.headers.origin || req.headers.referer || '*';
+  // ✅ CONFIGURAR SEGURIDAD (CORS RESTRINGIDO)
+  const EXTENSION_ID = 'mlbhcjeajpgihflpoghpfannfbakfnlo';
+  const allowedOrigin = `chrome-extension://${EXTENSION_ID}`;
+  const origin = req.headers.origin || '';
 
-  res.setHeader('Access-Control-Allow-Origin', origin);
+  // Permitir solo nuestra extensión o peticiones locales para desarrollo
+  if (origin !== allowedOrigin && process.env.NODE_ENV !== 'development') {
+    console.warn(`🛑 Bloqueada petición desde origen no autorizado: ${origin}`);
+    return res.status(403).json({ error: 'Acceso denegado. Origen no autorizado.' });
+  }
+
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
-  res.setHeader('Access-Control-Max-Age', '86400');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   // ✅ MANEJAR PREFLIGHT
   if (req.method === 'OPTIONS') {
