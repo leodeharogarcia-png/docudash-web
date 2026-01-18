@@ -1,31 +1,32 @@
 export async function sendTelegramMessage(text) {
-    const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-    const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+    const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+    const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-    if (!BOT_TOKEN || !CHAT_ID) {
-        console.warn('Telegram Bot Token or Chat ID not configured');
+    if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+        console.warn('⚠️ Telegram no configurado');
         return;
     }
 
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-
     try {
-        const response = await fetch(url, {
+        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                chat_id: CHAT_ID,
+                chat_id: TELEGRAM_CHAT_ID,
                 text: text,
-                parse_mode: 'Markdown',
-            }),
+                parse_mode: 'Markdown'
+            })
         });
 
         if (!response.ok) {
-            console.error('Failed to send Telegram message:', await response.text());
+            const error = await response.json();
+            console.error('❌ Telegram error:', error);
+            throw new Error(`Telegram API error: ${error.description}`);
         }
+
+        console.log('✅ Mensaje enviado a Telegram');
     } catch (error) {
-        console.error('Error sending Telegram message:', error);
+        console.error('❌ Error en sendTelegramMessage:', error);
+        throw error;  // ✅ IMPORTANTE: Re-lanzar el error
     }
 }

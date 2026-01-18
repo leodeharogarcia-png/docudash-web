@@ -36,5 +36,11 @@
       "source": "/api/(.*)",
       "destination": "/api/$1"
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/reddit-monitor",
+      "schedule": "0 9 * * *"
+    }
   ]
 }

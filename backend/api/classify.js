@@ -1,18 +1,18 @@
-import { sendTelegramMessage } from './lib/telegram';
+import { sendTelegramMessage } from './lib/telegram.js';
 
 export default async function handler(req, res) {
   // ✅ CONFIGURAR SEGURIDAD (CORS RESTRINGIDO)
-  const EXTENSION_ID = 'mlbhcjeajpgihflpoghpfannfbakfnlo';
-  const allowedOrigin = `chrome-extension://${EXTENSION_ID}`;
+  const EXTENSION_IDS = ['mlbhcjeajpgihflpoghpfannfbakfnlo', 'hicdgkaijiihjmgkacapdbekepldcbmk'];
   const origin = req.headers.origin || '';
+  const isAllowedOrigin = EXTENSION_IDS.some(id => origin === `chrome-extension://${id}`);
 
   // Permitir solo nuestra extensión o peticiones locales para desarrollo
-  if (origin !== allowedOrigin && process.env.NODE_ENV !== 'development') {
+  if (!isAllowedOrigin && process.env.NODE_ENV !== 'development') {
     console.warn(`🛑 Bloqueada petición desde origen no autorizado: ${origin}`);
     return res.status(403).json({ error: 'Acceso denegado. Origen no autorizado.' });
   }
 
-  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+  res.setHeader('Access-Control-Allow-Origin', origin);
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -59,85 +59,30 @@ ${companyCIF ? `- Si aparece el CIF "${companyCIF}" como cliente → Es FACTURA 
 `;
     }
 
-    const prompt = `### ROL
-Eres un Senior Accountant y Auditor Financiero experto en clasificación de documentos contables.
-Tu objetivo es identificar con MÁXIMA PRECISIÓN si un documento es EMITIDO o RECIBIDO.
+    const prompt = `### ROL: Senior Accountant.
+### OBJETIVO: Clasificar documento como EMITIDA o RECIBIDA.
 ${empresaInfo}
+### INSTRUCCIONES:
+1. **DIRECCIÓN**: "EMITIDA" si ${companyName || 'tu empresa'} es el emisor, "RECIBIDA" si es el cliente.
+2. **TERCERO EXTERNO**: Nombre de la otra empresa (max 3 palabras, sin S.L./S.A.).
+3. **CIF TERCERO**: NIF/CIF del tercero.
+4. **IMPORTE**: Total con IVA.
+5. **FECHA**: DD-MM-YYYY.
+6. **NÚMERO**: Nº de factura/ticket.
 
-### MÉTODO DE DETECCIÓN (EN ORDEN DE PRIORIDAD):
-
-**1. DETECCIÓN POR NOMBRE DE EMPRESA (PRIORIDAD MÁXIMA):**
-${companyName ? `
-   - Busca "${companyName}" o variaciones similares en el documento
-   - Si "${companyName}" es el EMISOR/VENDEDOR → EMITIDA
-   - Si "${companyName}" es el CLIENTE/COMPRADOR → RECIBIDA
-` : ''}
-${companyCIF ? `
-   - Busca el CIF "${companyCIF}" en el documento
-   - Si este CIF es del EMISOR → EMITIDA
-   - Si este CIF es del CLIENTE → RECIBIDA
-` : ''}
-
-**2. DETECCIÓN POR ESTRUCTURA DEL DOCUMENTO:**
-   
-   **FACTURA RECIBIDA (Compra/Gasto):**
-   - Sección "EMISOR/PROVEEDOR/VENDEDOR" → Empresa EXTERNA
-   - Sección "CLIENTE/COMPRADOR/DESTINATARIO" → Contiene "${companyName || 'tu empresa'}"
-   - Es dinero que PAGAS a un proveedor
-   - Representa un GASTO
-   
-   **FACTURA EMITIDA (Venta/Ingreso):**
-   - Sección "EMISOR/PROVEEDOR/VENDEDOR" → Contiene "${companyName || 'tu empresa'}"
-   - Sección "CLIENTE/COMPRADOR/DESTINATARIO" → Empresa EXTERNA
-   - Es dinero que COBRAS a un cliente
-   - Representa un INGRESO
-
-**3. IDENTIFICACIÓN DEL TERCERO EXTERNO:**
-   - Si es RECIBIDA: El tercero es el PROVEEDOR (quien emite)
-   - Si es EMITIDA: El tercero es el CLIENTE (quien recibe)
-
-### CONTEXTO
-El texto corresponde a un documento contable (factura, ticket, recibo).
-
-### TAREA
-Analiza el texto y extrae la información solicitada.
-Si un dato no aparece, devuelve null.
-
----
-TEXTO DEL DOCUMENTO:
-${text.substring(0, 6000)}
----
-
-### INSTRUCCIONES DE EXTRACCIÓN:
-1. **DIRECCIÓN** (CRÍTICO):
-   - Busca primero "${companyName || 'el nombre de la empresa del usuario'}"
-   - Si aparece como emisor → "EMITIDA"
-   - Si aparece como cliente → "RECIBIDA"
-   - Si no encuentras el nombre, analiza la estructura del documento
-
-2. **TERCERO EXTERNO**: 
-   - Nombre de la empresa que NO es "${companyName || 'tu empresa'}" (máximo 2-3 palabras)
-   - Simplifica nombres largos, elimina S.L., S.A., etc.
-
-3. **CIF TERCERO**: CIF de la empresa identificada como tercero externo
-
-4. **IMPORTE**: Total final con IVA incluido
-
-5. **FECHA**: Fecha de emisión en formato DD-MM-YYYY
-
-6. **NÚMERO DOCUMENTO**: Número de factura/ticket
-
-### FORMATO DE SALIDA (JSON ESTRICTO)
-Devuelve SOLO este JSON sin texto adicional:
+### FORMATO JSON:
 {
-  "direccion": "RECIBIDA o EMITIDA",
-  "tercero_externo": "NOMBRE EMPRESA EXTERNA",
-  "cif_tercero": "B12345678",
+  "direccion": "RECIBIDA/EMITIDA",
+  "tercero_externo": "NOMBRE",
+  "cif_tercero": "NIF",
   "tipoDocumento": "Factura",
-  "importe": 100.50,
-  "fechaDocumento": "15-11-2024",
-  "numeroDocumento": "F2024-001"
-}`;
+  "importe": 0.0,
+  "fechaDocumento": "DD-MM-YYYY",
+  "numeroDocumento": "000"
+}
+---
+TEXTO:
+${text.substring(0, 5000)}`;
 
     // ✅ VALIDAR API KEY
     const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
@@ -221,17 +166,26 @@ Devuelve SOLO este JSON sin texto adicional:
 
     console.log('📤 Enviando clasificación al cliente');
 
-    // 🔔 NOTIFICACIÓN TELEGRAM (ASÍNCRONA)
-    const telegramText = `✅ *¡Nueva Factura Procesada!*\n📄 *Proveedor:* ${classification.tercero_externo || 'Desconocido'}\n💰 *Importe:* ${classification.importe || '0'}€\n📅 *Tipo:* ${classification.direccion}`;
-    sendTelegramMessage(telegramText);
+    // 📢 NOTIFICACIÓN TELEGRAM (SIN BLOQUEAR EL ÉXITO)
+    // 📢 NOTIFICACIÓN TELEGRAM ANONIMIZADA (PRIVACIDAD)
+    const telegramText = `✅ *¡Nueva Factura Procesada!*\n🏢 *Empresa:* ${companyName || 'Usuario'}\n📢 El análisis ha finalizado exitosamente.`;
+    await sendTelegramMessage(telegramText).catch(err => {
+      console.error('❌ Error enviando a Telegram (DURANTE PROCESAMIENTO):', err.message);
+    });
 
     // ✅ RETORNAR CON HEADERS CORS
     return res.status(200).json(classification);
 
   } catch (error) {
     console.error('❌ Error general:', error);
+    console.error('📍 Stack completo:', error.stack);  // ✅ AÑADIR
+
+    // ✅ AÑADIR: Notificar error crítico a Telegram
+    await sendTelegramMessage(`🚨 *ERROR CRÍTICO EN API*\n\n${error.message}\n\nStack: ${error.stack?.substring(0, 200)}`).catch(() => { });
+
     return res.status(500).json({
       error: error.message || 'Error interno del servidor',
+      errorType: error.name,  // ✅ AÑADIR
       stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }

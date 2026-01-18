@@ -1,4 +1,4 @@
-import { sendTelegramMessage } from './lib/telegram';
+import { sendTelegramMessage } from './lib/telegram.js';
 
 export default async function handler(req, res) {
     const origin = req.headers.origin || '*';
