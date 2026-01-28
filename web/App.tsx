@@ -2221,53 +2221,78 @@ const Footer = () => {
 const Hero = () => {
   return (
     <section className="relative min-h-screen pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden flex items-center justify-center bg-[#0B0F19]">
-      {/* New Aurora Background Animation */}
+      {/* Enhanced Background Animation */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Animated Aurora Waves */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/4 w-[60%] h-[50%] bg-gradient-to-br from-blue-600/20 via-purple-600/10 to-transparent rounded-full blur-[120px] animate-pulse"></div>
-          <div className="absolute bottom-0 right-1/4 w-[50%] h-[40%] bg-gradient-to-tl from-indigo-600/15 via-blue-500/10 to-transparent rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute top-1/3 right-0 w-[40%] h-[60%] bg-gradient-to-l from-purple-500/10 via-pink-500/5 to-transparent rounded-full blur-[80px] animate-pulse" style={{ animationDelay: '2s' }}></div>
-        </div>
 
-        {/* Floating gradient lines */}
-        <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
-        <div className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-500/15 to-transparent"></div>
+        {/* Animated Grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_70%)]"></div>
 
-        {/* Subtle noise texture */}
-        <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat mix-blend-overlay"></div>
+        {/* Floating Orbs with movement */}
+        <div className="absolute top-[10%] left-[15%] w-[500px] h-[500px] bg-gradient-to-br from-blue-500/30 via-blue-600/20 to-transparent rounded-full blur-[100px] animate-float"></div>
+        <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-gradient-to-tl from-purple-500/25 via-indigo-500/15 to-transparent rounded-full blur-[80px] animate-float" style={{ animationDelay: '-2s' }}></div>
+        <div className="absolute top-[40%] right-[20%] w-[300px] h-[300px] bg-gradient-to-l from-pink-500/20 via-purple-400/10 to-transparent rounded-full blur-[60px] animate-float" style={{ animationDelay: '-4s' }}></div>
+        <div className="absolute bottom-[30%] left-[5%] w-[250px] h-[250px] bg-gradient-to-r from-cyan-500/15 to-transparent rounded-full blur-[50px] animate-pulse"></div>
+
+        {/* Animated Gradient Lines - Framing the main text */}
+        <div className="absolute top-[22%] left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent animate-pulse"></div>
+        <div className="absolute top-[55%] left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-purple-500/30 to-transparent animate-pulse" style={{ animationDelay: '1s' }}></div>
+
+        {/* Sparkle Particles */}
+        <div className="absolute top-[20%] left-[30%] w-1 h-1 bg-blue-400 rounded-full animate-ping opacity-60"></div>
+        <div className="absolute top-[60%] left-[70%] w-1.5 h-1.5 bg-purple-400 rounded-full animate-ping opacity-50" style={{ animationDelay: '0.5s' }}></div>
+        <div className="absolute top-[40%] left-[80%] w-1 h-1 bg-pink-400 rounded-full animate-ping opacity-40" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-[75%] left-[25%] w-1 h-1 bg-cyan-400 rounded-full animate-ping opacity-50" style={{ animationDelay: '1.5s' }}></div>
+        <div className="absolute top-[15%] left-[60%] w-1 h-1 bg-indigo-400 rounded-full animate-ping opacity-60" style={{ animationDelay: '2s' }}></div>
+
+        {/* Central Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-gradient-radial from-blue-600/10 via-transparent to-transparent rounded-full blur-[60px]"></div>
+
+        {/* Noise texture */}
+        <div className="absolute inset-0 opacity-[0.15] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat mix-blend-overlay"></div>
       </div>
 
       <div className="max-w-4xl mx-auto px-4 relative z-10">
-        {/* Centered Content */}
-        <div className="text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-xs font-semibold mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        {/* Section ABOVE top line - Badge */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-xs font-semibold animate-in fade-in slide-in-from-bottom-4 duration-700">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-blue"></span>
             </span>
-            Extensión Chrome & Brave
+            Extensión para Chrome & Brave
+          </div>
+        </div>
+
+        {/* Section BETWEEN lines - Main content */}
+        <div className="text-center py-8">
+          {/* Main Headline */}
+          <div className="space-y-3 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-100">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-white tracking-tight leading-[1.1]">
+              Tus facturas en
+            </h1>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.1]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-purple to-pink-500">Piloto Automático</span>
+            </h1>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight mb-6 md:mb-8 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-100">
-            Tus facturas en <br className="hidden sm:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-purple to-pink-500">Piloto Automático</span>
-          </h1>
-
-          <p className="text-base md:text-xl text-gray-400 mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
-            <strong className="text-white">¿Harto de perder horas organizando facturas?</strong> DocuDash Pro las mueve automáticamente de
-            <span className="inline-flex items-center gap-1 mx-1 font-bold text-red-400 bg-red-400/10 px-2 py-1 text-sm rounded border border-red-400/20">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail" className="w-4 h-4 object-contain" /> Gmail
+          {/* Subtitle */}
+          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed mt-6 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
+            Tu agente administrativo con IA que organiza automáticamente tus facturas de
+            <span className="inline-flex items-center gap-1.5 mx-1.5 text-white font-medium">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail" className="w-5 h-5" /> Gmail
             </span>
             a
-            <span className="inline-flex items-center gap-1 mx-1 font-bold text-green-400 bg-green-400/10 px-2 py-1 text-sm rounded border border-green-400/20">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-4 h-4 object-contain" /> Drive
+            <span className="inline-flex items-center gap-1.5 mx-1.5 text-white font-medium">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-5 h-5" /> Drive
             </span>
-            y extrae los datos fiscales con IA.
+            y te <span className="text-white font-medium">ahorra +5 horas cada trimestre</span>.
           </p>
+        </div>
 
+        {/* Section BELOW bottom line - CTA & Social Proof */}
+        <div className="text-center mt-12 space-y-8">
+          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in fade-in slide-in-from-bottom-7 duration-700 delay-300">
-            {/* Botón Principal */}
             <a
               href="https://chromewebstore.google.com/detail/mlbhcjeajpgihflpoghpfannfbakfnlo?utm_source=item-share-cb"
               target="_blank"
@@ -2284,7 +2309,6 @@ const Hero = () => {
               <ChevronRight size={20} className="text-white/70 group-hover:text-white group-hover:translate-x-1 transition-all" />
             </a>
 
-            {/* Botón Secundario */}
             <button
               onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
               className="group flex items-center justify-center gap-2 px-8 py-4 rounded-full font-medium text-gray-300 bg-white/5 border border-white/10 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all duration-300 backdrop-blur-sm"
@@ -2295,24 +2319,24 @@ const Hero = () => {
           </div>
 
           {/* Social Proof */}
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-400">
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <ShieldCheck size={16} className="text-green-500" />
-              <span>Datos cifrados</span>
+          <div className="flex flex-wrap items-center justify-center gap-8 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-400">
+            <div className="flex items-center gap-2 text-sm text-gray-400">
+              <ShieldCheck size={18} className="text-green-500" />
+              <span>Datos 100% privados</span>
             </div>
-            <div className="w-px h-4 bg-white/10"></div>
+            <div className="hidden sm:block w-px h-5 bg-white/20"></div>
             <div className="flex items-center gap-2">
-              <div className="flex">
+              <div className="flex -space-x-0.5">
                 {[1, 2, 3, 4, 5].map(i => (
-                  <Star key={i} size={14} className="fill-yellow-500 text-yellow-500" />
+                  <Star key={i} size={16} className="fill-yellow-500 text-yellow-500" />
                 ))}
               </div>
-              <span className="text-sm text-gray-400">5.0 en Chrome Store</span>
+              <span className="text-sm text-gray-400 font-medium">5.0 en Chrome Store</span>
             </div>
-            <div className="w-px h-4 bg-white/10"></div>
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <Zap size={16} className="text-brand-blue" />
-              <span>Setup en 30 segundos</span>
+            <div className="hidden sm:block w-px h-5 bg-white/20"></div>
+            <div className="flex items-center gap-2 text-sm text-gray-400">
+              <Zap size={18} className="text-brand-blue" />
+              <span>Listo en 30 segundos</span>
             </div>
           </div>
         </div>
