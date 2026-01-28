@@ -2220,112 +2220,106 @@ const Footer = () => {
 
 const Hero = () => {
   return (
-    <section className="relative pt-24 pb-4 md:pt-40 md:pb-28 overflow-hidden flex items-center justify-center bg-[#0B0F19]">
-      {/* Dynamic Background Animation */}
+    <section className="relative min-h-screen pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden flex items-center justify-center bg-[#0B0F19]">
+      {/* New Aurora Background Animation */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Subtle Grid Pattern - Increased Opacity */}
-        <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:30px_30px] opacity-20 animate-pulse"></div>
+        {/* Animated Aurora Waves */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-[60%] h-[50%] bg-gradient-to-br from-blue-600/20 via-purple-600/10 to-transparent rounded-full blur-[120px] animate-pulse"></div>
+          <div className="absolute bottom-0 right-1/4 w-[50%] h-[40%] bg-gradient-to-tl from-indigo-600/15 via-blue-500/10 to-transparent rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-1/3 right-0 w-[40%] h-[60%] bg-gradient-to-l from-purple-500/10 via-pink-500/5 to-transparent rounded-full blur-[80px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+        </div>
 
-        {/* Animated Gradient Orbs - Increased visibility & fixed animation class usage */}
-        <div className="absolute top-[-10%] left-[-10%] w-[40rem] h-[40rem] bg-brand-blue/10 rounded-full blur-[80px] animate-blob mix-blend-screen"></div>
-        <div className="absolute top-[20%] right-[-10%] w-[35rem] h-[35rem] bg-brand-purple/10 rounded-full blur-[80px] animate-blob mix-blend-screen" style={{ animationDelay: '2s', animationDirection: 'reverse' }}></div>
-        <div className="absolute bottom-[-10%] left-[20%] w-[40rem] h-[40rem] bg-brand-accent/5 rounded-full blur-[80px] animate-blob mix-blend-screen" style={{ animationDelay: '4s' }}></div>
+        {/* Floating gradient lines */}
+        <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
+        <div className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-500/15 to-transparent"></div>
 
-        {/* Floating Particles/Dust */}
-        <div className="absolute inset-0 opacity-30 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat brightness-50 contrast-150 mix-blend-overlay"></div>
+        {/* Subtle noise texture */}
+        <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat mix-blend-overlay"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-8 items-center w-full relative z-10">
-        {/* Left Column: Text */}
-        <div className="text-center lg:text-left z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-xs font-semibold mb-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="max-w-4xl mx-auto px-4 relative z-10">
+        {/* Centered Content */}
+        <div className="text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-xs font-semibold mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-blue"></span>
             </span>
-            Disponible para Chrome & Brave
+            Extensión Chrome & Brave
           </div>
-          <h1 className="text-2xl sm:text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight mb-4 md:mb-6...">
-            Tus facturas en <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-purple to-pink-500">Piloto Automático</span>
+
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight mb-6 md:mb-8 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-100">
+            Tus facturas en <br className="hidden sm:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-purple to-pink-500">Piloto Automático</span>
           </h1>
-          <p className="text-sm md:text-lg text-gray-400 mb-6 md:mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed...">
+
+          <p className="text-base md:text-xl text-gray-400 mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
             <strong className="text-white">¿Harto de perder horas organizando facturas?</strong> DocuDash Pro las mueve automáticamente de
-            <span className="inline-flex items-center gap-1 mx-1 font-bold text-red-400 bg-red-400/10 px-1.5 py-0.5 text-xs md:text-base rounded border border-red-400/20">
+            <span className="inline-flex items-center gap-1 mx-1 font-bold text-red-400 bg-red-400/10 px-2 py-1 text-sm rounded border border-red-400/20">
               <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail" className="w-4 h-4 object-contain" /> Gmail
             </span>
-            <span className="inline-flex items-center justify-center bg-white/5 rounded-full p-1 border border-white/10">
-              <ArrowRight size={14} className="text-gray-400" />
-            </span>
-            <span className="inline-flex items-center gap-1 mx-1 font-bold text-green-400 bg-green-400/10 px-1.5 py-0.5 text-xs md:text-base rounded border border-green-400/20">
+            a
+            <span className="inline-flex items-center gap-1 mx-1 font-bold text-green-400 bg-green-400/10 px-2 py-1 text-sm rounded border border-green-400/20">
               <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-4 h-4 object-contain" /> Drive
             </span>
-            y extrae los datos fiscales con IA. <span className="text-brand-blue font-semibold">Ahorra +5 horas cada trimestre.</span>
+            y extrae los datos fiscales con IA.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-in fade-in slide-in-from-bottom-7 duration-1000 delay-200">
-            {/* Botón Principal (Instalar) */}
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in fade-in slide-in-from-bottom-7 duration-700 delay-300">
+            {/* Botón Principal */}
             <a
               href="https://chromewebstore.google.com/detail/mlbhcjeajpgihflpoghpfannfbakfnlo?utm_source=item-share-cb"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex items-center justify-center gap-3 text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 px-8 md:px-10 py-3 md:py-4 rounded-full transition-all duration-300 shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 border border-white/10 hover:-translate-y-1 font-semibold text-base md:text-lg overflow-hidden"
+              className="group relative inline-flex items-center justify-center gap-3 text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 px-10 py-4 rounded-full transition-all duration-300 shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 border border-white/10 hover:-translate-y-1 font-semibold text-lg overflow-hidden"
             >
-              {/* Efecto de brillo superior */}
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-
-              {/* Destello hover */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-tr from-white/10 via-transparent to-transparent transition-opacity duration-500" />
-              {/* Icono Chrome */}
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg"
                 alt="Chrome"
-                className="w-5 h-5 md:w-6 md:h-6 drop-shadow-md group-hover:scale-110 transition-transform duration-300 relative z-10"
+                className="w-6 h-6 drop-shadow-md group-hover:scale-110 transition-transform duration-300"
               />
-
-              <span className="relative z-10 tracking-wide">
-                Instalar Gratis
-              </span>
-              <ChevronRight size={20} className="relative z-10 text-white/70 group-hover:text-white group-hover:translate-x-1 transition-all" />
+              <span>Instalar Gratis</span>
+              <ChevronRight size={20} className="text-white/70 group-hover:text-white group-hover:translate-x-1 transition-all" />
             </a>
-            {/* Botón Secundario (Ver en Acción) */}
+
+            {/* Botón Secundario */}
             <button
               onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-              className="group flex items-center justify-center gap-2 px-8 py-4 rounded-full font-medium text-gray-300 bg-[#1B2535]/50 border border-white/10 hover:bg-[#1B2535] hover:text-white hover:border-blue-500/30 transition-all duration-300 backdrop-blur-sm"
+              className="group flex items-center justify-center gap-2 px-8 py-4 rounded-full font-medium text-gray-300 bg-white/5 border border-white/10 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all duration-300 backdrop-blur-sm"
             >
-              <span className="group-hover:text-blue-200 transition-colors">Ver en Acción</span>
-              <ArrowRight size={18} className="text-gray-500 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
+              <span>Ver Funcionalidades</span>
+              <ArrowRight size={18} className="text-gray-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
             </button>
           </div>
 
-          {/* Social Proof Section */}
-          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+          {/* Social Proof */}
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-400">
             <div className="flex items-center gap-2 text-sm text-gray-500">
-              <ShieldCheck size={14} className="text-green-500" />
-              <span>Datos cifrados y privados</span>
+              <ShieldCheck size={16} className="text-green-500" />
+              <span>Datos cifrados</span>
             </div>
-            <div className="hidden sm:block w-px h-4 bg-white/10"></div>
+            <div className="w-px h-4 bg-white/10"></div>
             <div className="flex items-center gap-2">
               <div className="flex">
                 {[1, 2, 3, 4, 5].map(i => (
-                  <Star key={i} size={12} className="fill-yellow-500 text-yellow-500" />
+                  <Star key={i} size={14} className="fill-yellow-500 text-yellow-500" />
                 ))}
               </div>
-              <span className="text-xs text-gray-400">5.0 en Chrome Store</span>
+              <span className="text-sm text-gray-400">5.0 en Chrome Store</span>
             </div>
-          </div>
-
-          <div className="mt-8 max-w-md mx-auto lg:mx-0 opacity-90 hover:opacity-100 transition-opacity animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
-            <SimpleWorkflow />
-          </div>
-        </div>
-
-        {/* Right Column: Interactive Extension Demo */}
-        <div className="relative z-10 mt-6 lg:mt-0 flex flex-col items-center gap-2 lg:gap-6 justify-center w-full">
-          {/* Dashboard Panel - Scaled heavily on mobile to fit the fixed 520px width into a 360-400px screen */}
-          <div className="animate-float transform scale-[0.72] sm:scale-[0.85] lg:scale-[0.8] xl:scale-[0.9] origin-center lg:origin-bottom-left transition-transform duration-500 hover:scale-[0.75] sm:hover:scale-[0.88] lg:hover:scale-[0.82] xl:hover:scale-[0.92] -my-8 md:my-0">
-            <InteractiveExtension />
+            <div className="w-px h-4 bg-white/10"></div>
+            <div className="flex items-center gap-2 text-sm text-gray-500">
+              <Zap size={16} className="text-brand-blue" />
+              <span>Setup en 30 segundos</span>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Bottom Gradient Fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0B0F19] to-transparent pointer-events-none"></div>
     </section>
   );
 };
