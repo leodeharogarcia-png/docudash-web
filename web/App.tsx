@@ -1432,32 +1432,38 @@ const Features = () => {
     {
       icon: <Bot className="w-8 h-8 text-brand-blue" />,
       title: "Extracción IA Inteligente",
-      desc: "Nuestra IA analiza el contenido del PDF, no solo el nombre del archivo. Detecta CIF, Fecha, Importe Total y Nombre del Proveedor con un 99% de precisión."
+      desc: "Detecta CIF, Fecha, Importe Total y Proveedor con 99% de precisión. Analiza el contenido real del PDF, no solo el nombre.",
+      benefit: "99% precisión"
     },
     {
       icon: <FolderOpen className="w-8 h-8 text-brand-purple" />,
       title: "Organización Dinámica",
-      desc: "Tú defines la estructura. Organiza automáticamente en Drive por /Año/Mes/Proveedor o /Proveedor/Año. Mantén tu contabilidad impoluta."
+      desc: "Elige tu estructura: /Año/Mes/Cliente o /Cliente/Año. Tus facturas siempre ordenadas como tú quieras.",
+      benefit: "5 estructuras"
     },
     {
       icon: <FileSpreadsheet className="w-8 h-8 text-pink-500" />,
-      title: "Reportes en un Clic",
-      desc: "¿Cierre de trimestre? Exporta todo tu historial de facturas procesadas a Excel con columnas detalladas. Tu gestor te lo agradecerá."
+      title: "Reportes Excel Instantáneos",
+      desc: "Cierre trimestral en 1 clic. Exporta todo el historial con columnas detalladas para tu gestor o contable.",
+      benefit: "1-clic export"
     },
     {
       icon: <Mail className="w-8 h-8 text-yellow-500" />,
-      title: "Detección Híbrida",
-      desc: "Diferencia automáticamente entre facturas emitidas y recibidas analizando el contexto del correo y el documento."
+      title: "Emitidas vs Recibidas",
+      desc: "Diferencia automáticamente entre ingresos y gastos analizando el contexto del correo y la factura.",
+      benefit: "Auto-detección"
     },
     {
       img: "https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg",
       title: "Sync Google Drive",
-      desc: "Integración nativa con la API de Google Drive. Los archivos aparecen en tu nube segundos después de recibirlos en tu correo."
+      desc: "Integración nativa OAuth2. Los archivos aparecen en tu nube segundos después de procesarlos.",
+      benefit: "Tiempo real"
     },
     {
       icon: <Zap className="w-8 h-8 text-cyan-500" />,
       title: "Setup en 30 Segundos",
-      desc: "Sin configuraciones complejas. Instala la extensión, conecta tu cuenta de Google y empieza a ahorrar tiempo inmediatamente."
+      desc: "Sin configuraciones complejas. Instala, conecta Google y empieza a ahorrar tiempo inmediatamente.",
+      benefit: "30 seg setup"
     }
   ];
 
@@ -1469,13 +1475,16 @@ const Features = () => {
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
+          <span className="inline-block py-1 px-3 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-xs font-semibold tracking-wider uppercase mb-4">
+            Funcionalidades
+          </span>
           <h2 className="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4">Todo lo que necesitas para tu contabilidad</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">Deja que la tecnología haga el trabajo aburrido. Enfócate en hacer crecer tu negocio.</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {features.map((f, idx) => (
-            <div key={idx} className="bg-[#151A25]/50 border border-white/5 p-4 md:p-8 rounded-2xl hover:border-brand-blue/30 hover:bg-[#151A25] hover:shadow-2xl hover:shadow-brand-blue/5 hover:-translate-y-1 transition-all duration-300 group backdrop-blur-sm">
+            <div key={idx} className="bg-[#151A25]/50 border border-white/5 p-4 md:p-8 rounded-2xl hover:border-brand-blue/30 hover:bg-[#151A25] hover:shadow-2xl hover:shadow-brand-blue/5 hover:-translate-y-1 transition-all duration-300 group backdrop-blur-sm relative">
               <div className="mb-4 md:mb-6 p-2 md:p-3 bg-white/5 w-fit rounded-xl group-hover:scale-110 transition-transform">
                 {f.img ? (
                   <img src={f.img} alt={f.title} className="w-6 h-6 md:w-8 md:h-8 object-contain" />
@@ -1484,9 +1493,14 @@ const Features = () => {
                 )}
               </div>
               <h3 className="text-sm md:text-xl font-bold text-white mb-2 md:mb-3">{f.title}</h3>
-              <p className="text-gray-400 leading-relaxed text-xs md:text-sm">
+              <p className="text-gray-400 leading-relaxed text-xs md:text-sm mb-3">
                 {f.desc}
               </p>
+              {f.benefit && (
+                <span className="inline-block text-[10px] font-semibold text-brand-blue bg-brand-blue/10 px-2 py-1 rounded-full border border-brand-blue/20">
+                  {f.benefit}
+                </span>
+              )}
             </div>
           ))}
         </div>
@@ -1494,6 +1508,140 @@ const Features = () => {
     </section>
   );
 };
+
+// ==========================================
+// 📊 TAX DASHBOARD SECTION (IVA)
+// ==========================================
+
+const TaxDashboardSection = () => {
+  const categories = [
+    { name: 'SOFTWARE', amount: 450.20, color: 'from-blue-500 to-blue-600', percent: 40 },
+    { name: 'ADS', amount: 320.00, color: 'from-purple-500 to-purple-600', percent: 28 },
+    { name: 'OPERATIVA', amount: 180.50, color: 'from-green-500 to-green-600', percent: 16 },
+    { name: 'PROFESIONALES', amount: 150.00, color: 'from-yellow-500 to-yellow-600', percent: 13 },
+    { name: 'OTROS', amount: 34.30, color: 'from-gray-500 to-gray-600', percent: 3 },
+  ];
+
+  return (
+    <section id="tax-dashboard" className="py-12 md:py-24 bg-[#0f0c29] relative overflow-hidden">
+      {/* Grid Pattern Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-30"></div>
+      <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-emerald-900/10 to-transparent pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
+
+          {/* Left Column: Text */}
+          <div className="space-y-6">
+            <div className="w-fit inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+              </span>
+              NUEVO en v2.2.0
+            </div>
+
+            <h2 className="text-2xl md:text-5xl font-bold text-white leading-tight">
+              Prepara tu <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Modelo 303</span> en segundos
+            </h2>
+
+            <p className="text-lg text-gray-400 leading-relaxed">
+              DocuDash Pro calcula automáticamente tu <strong className="text-white">IVA Repercutido</strong> (facturas emitidas) y <strong className="text-white">IVA Soportado</strong> (facturas recibidas). Visualiza tu resultado estimado antes de la declaración.
+            </p>
+
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3 text-gray-300">
+                <CheckCircle2 className="text-emerald-500 mt-0.5 shrink-0" size={20} />
+                <span><strong className="text-white">Dashboard de IVA trimestral</strong> — Ve de un vistazo cuánto debes o te deben.</span>
+              </li>
+              <li className="flex items-start gap-3 text-gray-300">
+                <CheckCircle2 className="text-emerald-500 mt-0.5 shrink-0" size={20} />
+                <span><strong className="text-white">Categorización automática</strong> — IA que clasifica en ADS, SOFTWARE, OPERATIVA, etc.</span>
+              </li>
+              <li className="flex items-start gap-3 text-gray-300">
+                <CheckCircle2 className="text-emerald-500 mt-0.5 shrink-0" size={20} />
+                <span><strong className="text-white">Gráfico de gastos</strong> — Visualiza dónde va tu dinero cada trimestre.</span>
+              </li>
+            </ul>
+
+            <div className="pt-4">
+              <a
+                href="https://chromewebstore.google.com/detail/mlbhcjeajpgihflpoghpfannfbakfnlo?utm_source=item-share-cb"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 transition-colors font-medium hover:underline underline-offset-4"
+              >
+                Nunca más te pille Hacienda por sorpresa <ArrowRight size={16} />
+              </a>
+            </div>
+          </div>
+
+          {/* Right Column: Visual Dashboard */}
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+
+            <div className="relative bg-[#151a25] border border-white/10 rounded-2xl overflow-hidden shadow-2xl p-6 md:p-8">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-emerald-500/20 rounded-lg">
+                    <FileSpreadsheet className="w-5 h-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold">Panel de Impuestos</h4>
+                    <p className="text-xs text-gray-500">Q1 2025 • Enero - Marzo</p>
+                  </div>
+                </div>
+                <span className="text-xs font-semibold text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-full border border-emerald-400/20">
+                  ACTIVO
+                </span>
+              </div>
+
+              {/* IVA Cards */}
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="bg-gradient-to-br from-green-500/10 to-green-600/5 border border-green-500/20 rounded-xl p-4">
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">IVA Repercutido</p>
+                  <p className="text-xl md:text-2xl font-bold text-green-400">+2.205,00 €</p>
+                  <p className="text-xs text-gray-500 mt-1">5 facturas emitidas</p>
+                </div>
+                <div className="bg-gradient-to-br from-red-500/10 to-red-600/5 border border-red-500/20 rounded-xl p-4">
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">IVA Soportado</p>
+                  <p className="text-xl md:text-2xl font-bold text-red-400">-625,85 €</p>
+                  <p className="text-xs text-gray-500 mt-1">10 facturas recibidas</p>
+                </div>
+              </div>
+
+              {/* Resultado */}
+              <div className="bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-xl p-4 mb-6 text-center">
+                <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Resultado Estimado Q1</p>
+                <p className="text-2xl md:text-3xl font-bold text-white">A Ingresar: <span className="text-indigo-400">1.579,15 €</span></p>
+                <p className="text-xs text-gray-500 mt-2">Fecha límite Modelo 303: 20 Abril 2025</p>
+              </div>
+
+              {/* Category Chart */}
+              <div className="space-y-3">
+                <p className="text-xs text-gray-400 uppercase tracking-wider">Gastos por Categoría</p>
+                {categories.map((cat, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <span className="text-[10px] text-gray-500 w-20 text-right font-medium">{cat.name}</span>
+                    <div className="flex-1 h-4 bg-white/5 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full bg-gradient-to-r ${cat.color} rounded-full transition-all duration-700`}
+                        style={{ width: `${cat.percent}%` }}
+                      ></div>
+                    </div>
+                    <span className="text-xs text-gray-400 w-16">{cat.amount.toFixed(2)}€</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 
 const DriveIntegrationSection = () => {
   const [activeOption, setActiveOption] = useState(0);
@@ -1957,24 +2105,43 @@ const InstallationGuide = () => {
 
 const FAQ = () => {
   const faqs = [
-    { q: "¿Necesito API Key?", a: "No. DocuDash Pro viene con la API Key preconfigurada." },
-    { q: "¿Cómo se vincula con Drive?", a: "Utilizamos la autenticación oficial de Google (OAuth2)." },
-    { q: "¿Funciona con cualquier factura?", a: "Funciona mejor con facturas estándar PDF, pero nuestra IA es muy flexible." }
+    {
+      q: "¿Es seguro dar acceso a mi Gmail?",
+      a: "Totalmente. DocuDash Pro NO tiene acceso a leer tus correos. Solo procesa los archivos adjuntos que TÚ decides procesar haciendo clic. Usamos OAuth2 oficial de Google."
+    },
+    {
+      q: "¿Necesito configurar algo técnico?",
+      a: "No. Solo instala la extensión, conecta tu cuenta de Google y empieza a usar. Cero configuraciones técnicas."
+    },
+    {
+      q: "¿Puedo exportar los datos para mi gestoría?",
+      a: "Sí. Descarga un Excel con todas las facturas: Cliente, NIF, Base, IVA, Total, Categoría y enlace al archivo en Drive."
+    },
+    {
+      q: "¿Cómo me ayuda con el Modelo 303?",
+      a: "Calcula automáticamente tu IVA Repercutido e IVA Soportado, mostrándote el resultado estimado a pagar cada trimestre."
+    }
   ];
 
   return (
     <section id="faq" className="py-12 md:py-24 bg-[#0B0F19] relative">
       <div className="absolute inset-0 opacity-[0.02] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat"></div>
       <div className="max-w-3xl mx-auto px-4 relative z-10">
-        <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-8 md:mb-12">Preguntas Frecuentes</h2>
-        <div className="space-y-4">
+        <div className="text-center mb-8 md:mb-12">
+          <span className="inline-block py-1 px-3 rounded-full bg-brand-purple/10 border border-brand-purple/20 text-brand-purple text-xs font-semibold tracking-wider uppercase mb-4">
+            FAQ
+          </span>
+          <h2 className="text-2xl md:text-3xl font-bold text-white">Preguntas Frecuentes</h2>
+          <p className="text-gray-400 mt-2">Todo lo que necesitas saber antes de empezar</p>
+        </div>
+        <div className="space-y-3">
           {faqs.map((item, idx) => (
-            <details key={idx} className="group bg-[#151a25]/50 border border-white/5 rounded-xl backdrop-blur-sm">
-              <summary className="flex cursor-pointer list-none items-center justify-between p-6 text-lg font-medium text-white transition-colors group-hover:text-brand-blue">
-                {item.q}
-                <span className="transition group-open:rotate-180"><ChevronDown /></span>
+            <details key={idx} className="group bg-[#151a25]/50 border border-white/5 rounded-xl backdrop-blur-sm hover:border-white/10 transition-colors">
+              <summary className="flex cursor-pointer list-none items-center justify-between p-4 md:p-6 text-sm md:text-lg font-medium text-white transition-colors group-hover:text-brand-blue">
+                <span className="pr-4">{item.q}</span>
+                <span className="transition group-open:rotate-180 shrink-0"><ChevronDown size={20} /></span>
               </summary>
-              <div className="px-6 pb-6 text-gray-400 leading-relaxed">{item.a}</div>
+              <div className="px-4 md:px-6 pb-4 md:pb-6 text-gray-400 leading-relaxed text-sm">{item.a}</div>
             </details>
           ))}
         </div>
@@ -2033,11 +2200,17 @@ const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-600 text-xs">© 2024 DocuDash Pro. Todos los derechos reservados.</p>
-          <div className="flex gap-6 text-xs text-gray-500">
+          <div className="flex items-center gap-3 text-gray-600 text-xs">
+            <span>© {new Date().getFullYear()} DocuDash Pro. Todos los derechos reservados.</span>
+            <span className="hidden sm:inline-block w-px h-3 bg-white/10"></span>
+            <span className="hidden sm:inline-block text-brand-blue font-semibold">v2.2.0</span>
+          </div>
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-xs text-gray-500">
             <a href="/terms.html" className="hover:text-white transition-colors">Aviso Legal</a>
             <a href="/privacy.html" className="hover:text-white transition-colors">Privacidad</a>
-            <a href="#" className="hover:text-white transition-colors">Cookies</a>
+            <a href="https://chromewebstore.google.com/detail/mlbhcjeajpgihflpoghpfannfbakfnlo?utm_source=item-share-cb" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-1">
+              <Star size={10} className="fill-yellow-500 text-yellow-500" /> Valorar en Chrome Store
+            </a>
           </div>
         </div>
       </div>
@@ -2076,17 +2249,17 @@ const Hero = () => {
             Tus facturas en <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-purple to-pink-500">Piloto Automático</span>
           </h1>
           <p className="text-sm md:text-lg text-gray-400 mb-6 md:mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed...">
-            Olvídate de descargar PDFs manualmente. DocuDash Pro mueve tus documentos de
+            <strong className="text-white">¿Harto de perder horas organizando facturas?</strong> DocuDash Pro las mueve automáticamente de
             <span className="inline-flex items-center gap-1 mx-1 font-bold text-red-400 bg-red-400/10 px-1.5 py-0.5 text-xs md:text-base rounded border border-red-400/20">
               <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail" className="w-4 h-4 object-contain" /> Gmail
             </span>
             <span className="inline-flex items-center justify-center bg-white/5 rounded-full p-1 border border-white/10">
               <ArrowRight size={14} className="text-gray-400" />
             </span>
-            <span className="inline-flex items-center gap-1 mx-1 font-bold text-red-400 bg-red-400/10 px-1.5 py-0.5 text-xs md:text-base rounded border border-red-400/20">
+            <span className="inline-flex items-center gap-1 mx-1 font-bold text-green-400 bg-green-400/10 px-1.5 py-0.5 text-xs md:text-base rounded border border-green-400/20">
               <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-4 h-4 object-contain" /> Drive
             </span>
-            automáticamente, extrayendo los datos clave con IA.
+            y extrae los datos fiscales con IA. <span className="text-brand-blue font-semibold">Ahorra +5 horas cada trimestre.</span>
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-in fade-in slide-in-from-bottom-7 duration-1000 delay-200">
             {/* Botón Principal (Instalar) */}
@@ -2113,15 +2286,32 @@ const Hero = () => {
               </span>
               <ChevronRight size={20} className="relative z-10 text-white/70 group-hover:text-white group-hover:translate-x-1 transition-all" />
             </a>
-            {/* Botón Secundario (Demo) */}
-            <button className="group flex items-center justify-center gap-2 px-8 py-4 rounded-full font-medium text-gray-300 bg-[#1B2535]/50 border border-white/10 hover:bg-[#1B2535] hover:text-white hover:border-blue-500/30 transition-all duration-300 backdrop-blur-sm">
-              <span className="group-hover:text-blue-200 transition-colors">Ver Demo</span>
+            {/* Botón Secundario (Ver en Acción) */}
+            <button
+              onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+              className="group flex items-center justify-center gap-2 px-8 py-4 rounded-full font-medium text-gray-300 bg-[#1B2535]/50 border border-white/10 hover:bg-[#1B2535] hover:text-white hover:border-blue-500/30 transition-all duration-300 backdrop-blur-sm"
+            >
+              <span className="group-hover:text-blue-200 transition-colors">Ver en Acción</span>
               <ArrowRight size={18} className="text-gray-500 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
             </button>
           </div>
-          <p className="mt-4 text-sm text-gray-500 flex items-center justify-center lg:justify-start gap-2 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
-            <ShieldCheck size={14} className="text-green-500" /> Datos cifrados y privados
-          </p>
+
+          {/* Social Proof Section */}
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+            <div className="flex items-center gap-2 text-sm text-gray-500">
+              <ShieldCheck size={14} className="text-green-500" />
+              <span>Datos cifrados y privados</span>
+            </div>
+            <div className="hidden sm:block w-px h-4 bg-white/10"></div>
+            <div className="flex items-center gap-2">
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map(i => (
+                  <Star key={i} size={12} className="fill-yellow-500 text-yellow-500" />
+                ))}
+              </div>
+              <span className="text-xs text-gray-400">5.0 en Chrome Store</span>
+            </div>
+          </div>
 
           <div className="mt-8 max-w-md mx-auto lg:mx-0 opacity-90 hover:opacity-100 transition-opacity animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
             <SimpleWorkflow />
@@ -2287,12 +2477,13 @@ const App = () => {
       <SectionDivider />
       <Features />
       <SectionDivider />
+      <TaxDashboardSection />
+      <SectionDivider />
       <DriveIntegrationSection />
       <SectionDivider />
       <SecuritySection />
       <SectionDivider />
       <InstallationGuide />
-      <SectionDivider />
       <SectionDivider />
       <FAQ />
       <SectionDivider />
