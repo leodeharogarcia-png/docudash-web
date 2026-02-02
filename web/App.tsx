@@ -39,6 +39,46 @@ import {
 } from 'lucide-react';
 
 // ==========================================
+// ✨ SCROLL REVEAL COMPONENT
+// ==========================================
+
+const ScrollReveal = ({ children, className = "", delay = 0 }: any) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = React.useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-1000 transform ${isVisible
+        ? "opacity-100 translate-y-0"
+        : "opacity-0 translate-y-12"
+        } ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+};
+
+// ==========================================
 // 🧩 INTERACTIVE EXTENSION REPLICA
 // ==========================================
 
@@ -1474,36 +1514,38 @@ const Features = () => {
       <div className="absolute inset-0 opacity-[0.02] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat"></div>
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
-          <span className="inline-block py-1 px-3 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-xs font-semibold tracking-wider uppercase mb-4">
-            Funcionalidades
-          </span>
-          <h2 className="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4">Todo lo que necesitas para tu contabilidad</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">Deja que la tecnología haga el trabajo aburrido. Enfócate en hacer crecer tu negocio.</p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16">
+            <span className="inline-block py-1 px-3 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-xs font-semibold tracking-wider uppercase mb-4">
+              Funcionalidades
+            </span>
+            <h2 className="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4">Todo lo que necesitas para tu contabilidad</h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">Deja que la tecnología haga el trabajo aburrido. Enfócate en hacer crecer tu negocio.</p>
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-          {features.map((f, idx) => (
-            <div key={idx} className="bg-[#151A25]/50 border border-white/5 p-4 md:p-8 rounded-2xl hover:border-brand-blue/30 hover:bg-[#151A25] hover:shadow-2xl hover:shadow-brand-blue/5 hover:-translate-y-1 transition-all duration-300 group backdrop-blur-sm relative">
-              <div className="mb-4 md:mb-6 p-2 md:p-3 bg-white/5 w-fit rounded-xl group-hover:scale-110 transition-transform">
-                {f.img ? (
-                  <img src={f.img} alt={f.title} className="w-6 h-6 md:w-8 md:h-8 object-contain" />
-                ) : (
-                  f.icon
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+            {features.map((f, idx) => (
+              <div key={idx} className="bg-[#151A25]/50 border border-white/5 p-4 md:p-8 rounded-2xl hover:border-brand-blue/30 hover:bg-[#151A25] hover:shadow-2xl hover:shadow-brand-blue/5 hover:-translate-y-1 transition-all duration-300 group backdrop-blur-sm relative">
+                <div className="mb-4 md:mb-6 p-2 md:p-3 bg-white/5 w-fit rounded-xl group-hover:scale-110 transition-transform">
+                  {f.img ? (
+                    <img src={f.img} alt={f.title} className="w-6 h-6 md:w-8 md:h-8 object-contain" />
+                  ) : (
+                    f.icon
+                  )}
+                </div>
+                <h3 className="text-sm md:text-xl font-bold text-white mb-2 md:mb-3">{f.title}</h3>
+                <p className="text-gray-400 leading-relaxed text-xs md:text-sm mb-3">
+                  {f.desc}
+                </p>
+                {f.benefit && (
+                  <span className="inline-block text-[10px] font-semibold text-brand-blue bg-brand-blue/10 px-2 py-1 rounded-full border border-brand-blue/20">
+                    {f.benefit}
+                  </span>
                 )}
               </div>
-              <h3 className="text-sm md:text-xl font-bold text-white mb-2 md:mb-3">{f.title}</h3>
-              <p className="text-gray-400 leading-relaxed text-xs md:text-sm mb-3">
-                {f.desc}
-              </p>
-              {f.benefit && (
-                <span className="inline-block text-[10px] font-semibold text-brand-blue bg-brand-blue/10 px-2 py-1 rounded-full border border-brand-blue/20">
-                  {f.benefit}
-                </span>
-              )}
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
@@ -1529,114 +1571,115 @@ const TaxDashboardSection = () => {
       <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-emerald-900/10 to-transparent pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
+        <ScrollReveal>
+          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
 
-          {/* Left Column: Text */}
-          <div className="space-y-6">
-            <div className="w-fit inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-              </span>
-              NUEVO en v2.2.0
-            </div>
-
-            <h2 className="text-2xl md:text-5xl font-bold text-white leading-tight">
-              Prepara tu <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Modelo 303</span> en segundos
-            </h2>
-
-            <p className="text-lg text-gray-400 leading-relaxed">
-              DocuDash Pro calcula automáticamente tu <strong className="text-white">IVA Repercutido</strong> (facturas emitidas) y <strong className="text-white">IVA Soportado</strong> (facturas recibidas). Visualiza tu resultado estimado antes de la declaración.
-            </p>
-
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-gray-300">
-                <CheckCircle2 className="text-emerald-500 mt-0.5 shrink-0" size={20} />
-                <span><strong className="text-white">Dashboard de IVA trimestral</strong> — Ve de un vistazo cuánto debes o te deben.</span>
-              </li>
-              <li className="flex items-start gap-3 text-gray-300">
-                <CheckCircle2 className="text-emerald-500 mt-0.5 shrink-0" size={20} />
-                <span><strong className="text-white">Categorización automática</strong> — IA que clasifica en ADS, SOFTWARE, OPERATIVA, etc.</span>
-              </li>
-              <li className="flex items-start gap-3 text-gray-300">
-                <CheckCircle2 className="text-emerald-500 mt-0.5 shrink-0" size={20} />
-                <span><strong className="text-white">Gráfico de gastos</strong> — Visualiza dónde va tu dinero cada trimestre.</span>
-              </li>
-            </ul>
-
-            <div className="pt-4">
-              <a
-                href="https://chromewebstore.google.com/detail/mlbhcjeajpgihflpoghpfannfbakfnlo?utm_source=item-share-cb"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 transition-colors font-medium hover:underline underline-offset-4"
-              >
-                Nunca más te pille Hacienda por sorpresa <ArrowRight size={16} />
-              </a>
-            </div>
-          </div>
-
-          {/* Right Column: Visual Dashboard */}
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-
-            <div className="relative bg-[#151a25] border border-white/10 rounded-2xl overflow-hidden shadow-2xl p-6 md:p-8">
-              {/* Header */}
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-emerald-500/20 rounded-lg">
-                    <FileSpreadsheet className="w-5 h-5 text-emerald-400" />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-semibold">Panel de Impuestos</h4>
-                    <p className="text-xs text-gray-500">Q1 2025 • Enero - Marzo</p>
-                  </div>
-                </div>
-                <span className="text-xs font-semibold text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-full border border-emerald-400/20">
-                  ACTIVO
+            {/* Left Column: Text */}
+            <div className="space-y-6">
+              <div className="w-fit inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                 </span>
+                NUEVO en v2.2.0
               </div>
 
-              {/* IVA Cards */}
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="bg-gradient-to-br from-green-500/10 to-green-600/5 border border-green-500/20 rounded-xl p-4">
-                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">IVA Repercutido</p>
-                  <p className="text-xl md:text-2xl font-bold text-green-400">+2.205,00 €</p>
-                  <p className="text-xs text-gray-500 mt-1">5 facturas emitidas</p>
-                </div>
-                <div className="bg-gradient-to-br from-red-500/10 to-red-600/5 border border-red-500/20 rounded-xl p-4">
-                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">IVA Soportado</p>
-                  <p className="text-xl md:text-2xl font-bold text-red-400">-625,85 €</p>
-                  <p className="text-xs text-gray-500 mt-1">10 facturas recibidas</p>
-                </div>
-              </div>
+              <h2 className="text-2xl md:text-5xl font-bold text-white leading-tight">
+                Prepara tu <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Modelo 303</span> en segundos
+              </h2>
 
-              {/* Resultado */}
-              <div className="bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-xl p-4 mb-6 text-center">
-                <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Resultado Estimado Q1</p>
-                <p className="text-2xl md:text-3xl font-bold text-white">A Ingresar: <span className="text-indigo-400">1.579,15 €</span></p>
-                <p className="text-xs text-gray-500 mt-2">Fecha límite Modelo 303: 20 Abril 2025</p>
-              </div>
+              <p className="text-lg text-gray-400 leading-relaxed">
+                DocuDash Pro calcula automáticamente tu <strong className="text-white">IVA Repercutido</strong> (facturas emitidas) y <strong className="text-white">IVA Soportado</strong> (facturas recibidas). Visualiza tu resultado estimado antes de la declaración.
+              </p>
 
-              {/* Category Chart */}
-              <div className="space-y-3">
-                <p className="text-xs text-gray-400 uppercase tracking-wider">Gastos por Categoría</p>
-                {categories.map((cat, idx) => (
-                  <div key={idx} className="flex items-center gap-3">
-                    <span className="text-[10px] text-gray-500 w-20 text-right font-medium">{cat.name}</span>
-                    <div className="flex-1 h-4 bg-white/5 rounded-full overflow-hidden">
-                      <div
-                        className={`h-full bg-gradient-to-r ${cat.color} rounded-full transition-all duration-700`}
-                        style={{ width: `${cat.percent}%` }}
-                      ></div>
-                    </div>
-                    <span className="text-xs text-gray-400 w-16">{cat.amount.toFixed(2)}€</span>
-                  </div>
-                ))}
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3 text-gray-300">
+                  <CheckCircle2 className="text-emerald-500 mt-0.5 shrink-0" size={20} />
+                  <span><strong className="text-white">Dashboard de IVA trimestral</strong> — Ve de un vistazo cuánto debes o te deben.</span>
+                </li>
+                <li className="flex items-start gap-3 text-gray-300">
+                  <CheckCircle2 className="text-emerald-500 mt-0.5 shrink-0" size={20} />
+                  <span><strong className="text-white">Categorización automática</strong> — IA que clasifica en ADS, SOFTWARE, OPERATIVA, etc.</span>
+                </li>
+                <li className="flex items-start gap-3 text-gray-300">
+                  <CheckCircle2 className="text-emerald-500 mt-0.5 shrink-0" size={20} />
+                  <span><strong className="text-white">Gráfico de gastos</strong> — Visualiza dónde va tu dinero cada trimestre.</span>
+                </li>
+              </ul>
+
+              <div className="pt-4">
+                <a
+                  href="https://chromewebstore.google.com/detail/mlbhcjeajpgihflpoghpfannfbakfnlo?utm_source=item-share-cb"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 transition-colors font-medium hover:underline underline-offset-4"
+                >
+                  Nunca más te pille Hacienda por sorpresa <ArrowRight size={16} />
+                </a>
               </div>
             </div>
-          </div>
-        </div>
+
+            {/* Right Column: Visual Dashboard */}
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+
+              <div className="relative bg-[#151a25] border border-white/10 rounded-2xl overflow-hidden shadow-2xl p-6 md:p-8">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-emerald-500/20 rounded-lg">
+                      <FileSpreadsheet className="w-5 h-5 text-emerald-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold">Panel de Impuestos</h4>
+                      <p className="text-xs text-gray-500">Q1 2025 • Enero - Marzo</p>
+                    </div>
+                  </div>
+                  <span className="text-xs font-semibold text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-full border border-emerald-400/20">
+                    ACTIVO
+                  </span>
+                </div>
+
+                {/* IVA Cards */}
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="bg-gradient-to-br from-green-500/10 to-green-600/5 border border-green-500/20 rounded-xl p-4">
+                    <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">IVA Repercutido</p>
+                    <p className="text-xl md:text-2xl font-bold text-green-400">+2.205,00 €</p>
+                    <p className="text-xs text-gray-500 mt-1">5 facturas emitidas</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-red-500/10 to-red-600/5 border border-red-500/20 rounded-xl p-4">
+                    <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">IVA Soportado</p>
+                    <p className="text-xl md:text-2xl font-bold text-red-400">-625,85 €</p>
+                    <p className="text-xs text-gray-500 mt-1">10 facturas recibidas</p>
+                  </div>
+                </div>
+
+                {/* Resultado */}
+                <div className="bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-xl p-4 mb-6 text-center">
+                  <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Resultado Estimado Q1</p>
+                  <p className="text-2xl md:text-3xl font-bold text-white">A Ingresar: <span className="text-indigo-400">1.579,15 €</span></p>
+                  <p className="text-xs text-gray-500 mt-2">Fecha límite Modelo 303: 20 Abril 2025</p>
+                </div>
+
+                {/* Category Chart */}
+                <div className="space-y-3">
+                  <p className="text-xs text-gray-400 uppercase tracking-wider">Gastos por Categoría</p>
+                  {categories.map((cat, idx) => (
+                    <div key={idx} className="flex items-center gap-3">
+                      <span className="text-[10px] text-gray-500 w-20 text-right font-medium">{cat.name}</span>
+                      <div className="flex-1 h-4 bg-white/5 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full bg-gradient-to-r ${cat.color} rounded-full transition-all duration-700`}
+                          style={{ width: `${cat.percent}%` }}
+                        ></div>
+                      </div>
+                      <span className="text-xs text-gray-400 w-16">{cat.amount.toFixed(2)}€</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+        </ScrollReveal>
       </div>
     </section>
   );
@@ -2127,24 +2170,26 @@ const FAQ = () => {
     <section id="faq" className="py-12 md:py-24 bg-[#0B0F19] relative">
       <div className="absolute inset-0 opacity-[0.02] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat"></div>
       <div className="max-w-3xl mx-auto px-4 relative z-10">
-        <div className="text-center mb-8 md:mb-12">
-          <span className="inline-block py-1 px-3 rounded-full bg-brand-purple/10 border border-brand-purple/20 text-brand-purple text-xs font-semibold tracking-wider uppercase mb-4">
-            FAQ
-          </span>
-          <h2 className="text-2xl md:text-3xl font-bold text-white">Preguntas Frecuentes</h2>
-          <p className="text-gray-400 mt-2">Todo lo que necesitas saber antes de empezar</p>
-        </div>
-        <div className="space-y-3">
-          {faqs.map((item, idx) => (
-            <details key={idx} className="group bg-[#151a25]/50 border border-white/5 rounded-xl backdrop-blur-sm hover:border-white/10 transition-colors">
-              <summary className="flex cursor-pointer list-none items-center justify-between p-4 md:p-6 text-sm md:text-lg font-medium text-white transition-colors group-hover:text-brand-blue">
-                <span className="pr-4">{item.q}</span>
-                <span className="transition group-open:rotate-180 shrink-0"><ChevronDown size={20} /></span>
-              </summary>
-              <div className="px-4 md:px-6 pb-4 md:pb-6 text-gray-400 leading-relaxed text-sm">{item.a}</div>
-            </details>
-          ))}
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-8 md:mb-12">
+            <span className="inline-block py-1 px-3 rounded-full bg-brand-purple/10 border border-brand-purple/20 text-brand-purple text-xs font-semibold tracking-wider uppercase mb-4">
+              FAQ
+            </span>
+            <h2 className="text-2xl md:text-3xl font-bold text-white">Preguntas Frecuentes</h2>
+            <p className="text-gray-400 mt-2">Todo lo que necesitas saber antes de empezar</p>
+          </div>
+          <div className="space-y-3">
+            {faqs.map((item, idx) => (
+              <details key={idx} className="group bg-[#151a25]/50 border border-white/5 rounded-xl backdrop-blur-sm hover:border-white/10 transition-colors">
+                <summary className="flex cursor-pointer list-none items-center justify-between p-4 md:p-6 text-sm md:text-lg font-medium text-white transition-colors group-hover:text-brand-blue">
+                  <span className="pr-4">{item.q}</span>
+                  <span className="transition group-open:rotate-180 shrink-0"><ChevronDown size={20} /></span>
+                </summary>
+                <div className="px-4 md:px-6 pb-4 md:pb-6 text-gray-400 leading-relaxed text-sm">{item.a}</div>
+              </details>
+            ))}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
@@ -2440,49 +2485,69 @@ const Testimonials = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[20rem] bg-brand-blue/5 rounded-full blur-[100px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-xs font-semibold mb-4">
-            <Star size={12} className="fill-yellow-400" />
-            100% Gratis de por Vida
+        <ScrollReveal>
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-xs font-semibold mb-4">
+              <Star size={12} className="fill-yellow-400" />
+              100% Gratis de por Vida
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+              Personas reales que ya <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-500">Ahorran Tiempo</span>
+            </h2>
+            <p className="text-gray-400 max-w-2xl mx-auto mb-8">
+              Autónomos, dueños de negocios y profesionales que han dejado de pelearse con las facturas.
+            </p>
+
+            {/* User Stat */}
+            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm text-gray-300">
+              <div className="flex -space-x-2">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="w-6 h-6 rounded-full bg-gradient-to-br from-gray-700 to-gray-600 border border-[#0B0F19]"></div>
+                ))}
+              </div>
+              <span>Más de <strong>+200 usuarios</strong> activos</span>
+            </div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-            Personas reales que ya <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-500">Ahorran Tiempo</span>
-          </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Autónomos, dueños de negocios y profesionales que han dejado de pelearse con las facturas.
-          </p>
-        </div>
+        </ScrollReveal>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {reviews.map((review, i) => (
-            <div key={i} className="group relative p-8 rounded-2xl bg-[#151a25] border border-white/5 hover:border-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-brand-blue/10">
-              <div className="absolute top-8 right-8 text-white/5 group-hover:text-white/10 transition-colors">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z" />
-                </svg>
-              </div>
-
-              <div className="flex items-center gap-4 mb-6">
-                <div className={`w-12 h-12 rounded-full ${review.color} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
-                  {review.initials}
+            <ScrollReveal key={i} delay={i * 100}>
+              <div className="group relative p-8 rounded-2xl bg-[#151a25] border border-white/5 hover:border-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-brand-blue/10 h-full flex flex-col">
+                <div className="absolute top-8 right-8 text-white/5 group-hover:text-white/10 transition-colors">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z" />
+                  </svg>
                 </div>
-                <div>
-                  <h4 className="text-white font-semibold">{review.name}</h4>
-                  <p className="text-brand-blue text-sm font-medium">{review.role}</p>
+
+                <div className="flex items-center gap-4 mb-6">
+                  <div className={`w-12 h-12 rounded-full ${review.color} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
+                    {review.initials}
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold flex items-center gap-2">
+                      {review.name}
+                      <span className="text-green-500" title="Compra Verificada">
+                        <CheckCircle2 size={14} className="fill-green-500/20" />
+                      </span>
+                    </h4>
+                    <p className="text-brand-blue text-sm font-medium">{review.role}</p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex gap-1 mb-4">
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <Star key={s} size={14} className="fill-yellow-500 text-yellow-500" />
-                ))}
-              </div>
+                <div className="flex gap-1 mb-4">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star key={s} size={14} className="fill-yellow-500 text-yellow-500" />
+                  ))}
+                  <span className="text-xs text-gray-500 ml-auto pt-0.5">hace {Math.floor(Math.random() * 5) + 1} días</span>
+                </div>
 
-              <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
-                "{review.text}"
-              </p>
-            </div>
+                <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
+                  "{review.text}"
+                </p>
+              </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
