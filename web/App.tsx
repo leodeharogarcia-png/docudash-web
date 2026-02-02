@@ -2233,9 +2233,7 @@ const Hero = () => {
         <div className="absolute top-[40%] right-[20%] w-[300px] h-[300px] bg-gradient-to-l from-pink-500/20 via-purple-400/10 to-transparent rounded-full blur-[60px] animate-float" style={{ animationDelay: '-4s' }}></div>
         <div className="absolute bottom-[30%] left-[5%] w-[250px] h-[250px] bg-gradient-to-r from-cyan-500/15 to-transparent rounded-full blur-[50px] animate-pulse"></div>
 
-        {/* Animated Gradient Lines - Framing the main text */}
-        <div className="absolute top-[22%] left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent animate-pulse"></div>
-        <div className="absolute top-[55%] left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-purple-500/30 to-transparent animate-pulse" style={{ animationDelay: '1s' }}></div>
+
 
         {/* Sparkle Particles */}
         <div className="absolute top-[20%] left-[30%] w-1 h-1 bg-blue-400 rounded-full animate-ping opacity-60"></div>
@@ -2264,7 +2262,10 @@ const Hero = () => {
         </div>
 
         {/* Section BETWEEN lines - Main content */}
-        <div className="text-center py-8">
+        <div className="text-center py-8 relative">
+          {/* Top Line */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-screen h-[2px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent animate-pulse"></div>
+
           {/* Main Headline */}
           <div className="space-y-3 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-100">
             <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-white tracking-tight leading-[1.1]">
@@ -2287,6 +2288,9 @@ const Hero = () => {
             </span>
             y te <span className="text-white font-medium">ahorra +5 horas cada trimestre</span>.
           </p>
+
+          {/* Bottom Line */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-screen h-[2px] bg-gradient-to-r from-transparent via-purple-500/30 to-transparent animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
 
         {/* Section BELOW bottom line - CTA & Social Proof */}
